@@ -1,10 +1,6 @@
 const lighthouse = require("lighthouse");
 const chromeLauncher = require("chrome-launcher");
-// const CL = require("chrome-launcher");
-//
-// const { launch, LaunchedChrome } = CL;
 
-const urls = ["http://elements.nl"];
 const config = {
   passes: [
     {
@@ -36,16 +32,34 @@ const flags = {
   //"chrome-flags": "--headless"
 };
 
-chromeLauncher
-  .launch({
-    chromeFlags: ["--headless"]
-  })
-  .then(chrome => {
-    flags.port = chrome.port;
-    return Promise.all(urls.map(url => lighthouse(url, flags, config))).then(
-      results =>
-        chrome.kill().then(() => {
-          console.log(results);
-        })
-    );
-  });
+const run = ({ urls }) =>
+  chromeLauncher
+    .launch({
+      chromeFlags: ["--headless"]
+    })
+    .then(chrome => {
+      flags.port = chrome.port;
+
+      async function executeSequentially() {
+        const tasks = urls.map(url => () => lighthouse(url, flags, config));
+        const completeTasks = [];
+        for (const fn of tasks) {
+          try {
+            const result = await fn();
+            completeTasks.push(result);
+          } catch (err) {
+            console.log(err);
+          }
+        }
+
+        return completeTasks;
+      }
+
+      return executeSequentially().then(completed =>
+        chrome.kill().then(() => completed)
+      );
+    });
+
+module.exports = {
+  run
+};

@@ -1,6 +1,5 @@
 * Docker image, pass the list of urls to it
 * Save results in JSON
-* Similar way of passing URLs to all components/scripts
 * Formatters ( Filters )
 
 ## Validations
