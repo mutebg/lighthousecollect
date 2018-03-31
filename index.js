@@ -5,7 +5,6 @@ const identity = require("lodash").identity;
 const map = require("lodash").map;
 
 const utils = require("./utils");
-const config = require("./config.json");
 
 //list of tool
 const a11y = require("./a11y");
@@ -52,6 +51,12 @@ const options = [
     description: "Run only single validator",
     validation: identity,
     defValue: null
+  },
+  {
+    param: "outputpath",
+    description: "Default outputh path",
+    validation: identity,
+    defValue: ""
   }
 ];
 
@@ -62,7 +67,8 @@ options.forEach(({ param, description, validation, defValue }) => {
 });
 program.parse(process.argv);
 
-["task", "project", "urls", "skip", "only"].forEach(param => {
+const config = {};
+options.forEach(({ param }) => {
   config[param] = program[param];
 });
 
@@ -79,5 +85,11 @@ map(tools, (validator, key) => ({
     return true;
   })
   .forEach(({ validator, name }) => {
-    validator.run(config).then(data => console.log(data));
+    validator
+      .run(config)
+      .then(data => utils.saveAsFile(config, name, data))
+      .then(() => {
+        console.log("DONE:" + name);
+      })
+      .catch(console.log);
   });

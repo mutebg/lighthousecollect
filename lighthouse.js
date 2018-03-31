@@ -2,23 +2,7 @@ const lighthouse = require("lighthouse");
 const chromeLauncher = require("chrome-launcher");
 
 const config = {
-  passes: [
-    {
-      recordTrace: true,
-      pauseBeforeTraceEndMs: 5000,
-      pauseAfterNetworkQuietMs: 2500,
-      useThrottling: true,
-      gatherers: []
-    }
-  ],
-
-  audits: [
-    "first-meaningful-paint",
-    "speed-index-metric",
-    "estimated-input-latency",
-    "first-interactive",
-    "consistently-interactive"
-  ]
+  extends: "lighthouse:default"
 };
 const flags = {
   runs: 1,
