@@ -1,6 +1,7 @@
 * Docker image, pass the list of urls to it
 * Save results in JSON
 * Formatters ( Filters )
+* Create server which store all data
 
 ## Validations
 

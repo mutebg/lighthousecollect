@@ -57,6 +57,12 @@ const options = [
     description: "Default outputh path",
     validation: identity,
     defValue: ""
+  },
+  {
+    param: "remoteserver",
+    description: "HTTP server",
+    validator: identity,
+    defValue: ""
   }
 ];
 
