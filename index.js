@@ -8,13 +8,13 @@ const utils = require("./utils");
 
 //list of tool
 const a11y = require("./a11y");
-const htmlValidator = require("./htmlvalidator");
+const htmlvalidator = require("./htmlvalidator");
 const lighthouse = require("./lighthouse");
 const microdata = require("./microdata");
 
 const tools = {
   a11y,
-  htmlValidator,
+  htmlvalidator,
   lighthouse,
   microdata
 };
@@ -93,7 +93,7 @@ map(tools, (validator, key) => ({
   .forEach(({ validator, name }) => {
     validator
       .run(config)
-      .then(data => utils.saveAsFile(config, name, data))
+      .then(data => utils.saveOnWeb(config, name, data))
       .then(() => {
         console.log("DONE:" + name);
       })

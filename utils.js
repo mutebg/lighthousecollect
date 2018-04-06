@@ -26,7 +26,12 @@ const saveOnWeb = (
         data: json[index]
       };
       console.log(post);
-      return request.post(remoteserver + "/api/record", post);
+      return request({
+        method: "POST",
+        url: remoteserver + "/api/record",
+        json: true,
+        body: post
+      });
     })
   );
 };

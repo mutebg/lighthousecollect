@@ -9,6 +9,7 @@ const a11yPromisse = url =>
       if (err) {
         reject(err);
       } else {
+        delete reports.report;
         resolve(reports);
       }
     });
