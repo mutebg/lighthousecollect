@@ -93,7 +93,8 @@ map(tools, (validator, key) => ({
   .forEach(({ validator, name }) => {
     validator
       .run(config)
-      .then(data => utils.saveOnWeb(config, name, data))
+      //.then(data => utils.saveOnWeb(config, name, data))
+      .then(data => utils.saveAsFile(config, name, data))
       .then(() => {
         console.log("DONE:" + name);
       })
