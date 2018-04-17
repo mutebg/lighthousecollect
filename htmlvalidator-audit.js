@@ -34,7 +34,8 @@ class HTMLvalidatorAudit extends Audit {
     return validator(options)
       .then(data => ({
         rawValue: data.messages,
-        score: 100
+        score: 100,
+        displayValue: "IS FINE"
       }))
       .catch(error => {
         console.error(error);

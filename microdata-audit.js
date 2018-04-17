@@ -1,18 +1,6 @@
-/**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
- */
-"use strict";
-
 const Audit = require("lighthouse").Audit;
 const WAE = require("web-auto-extractor").default;
 const wae = WAE();
-
-/**
- * @fileoverview Tests that `window.myLoadMetrics.searchableTime` was below the
- * test threshold value.
- */
 
 class MicrodataAudit extends Audit {
   static get meta() {
@@ -29,11 +17,98 @@ class MicrodataAudit extends Audit {
     const html = artifacts.TakeHTML;
     const data = wae.parse(html);
 
+    let score = 100;
+    const reportItems = [];
+    const metaErrors = validateMeta(data);
+    const facebookErrors = validateFacebook(data);
+    const twitterErrors = validateTwitter(data);
+    if (metaErrors.length > 0) {
+      reportItems.push(
+        formatMsg({
+          type: "Meta",
+          message: `those tags are missing: ${metaErrors.join(", ")}`
+        })
+      );
+      score -= 10;
+    }
+    if (facebookErrors.length > 0) {
+      reportItems.push(
+        formatMsg({
+          type: "Facebook sharing",
+          message: `those tags are missing: ${facebookErrors.join(", ")}`
+        })
+      );
+      score -= 7;
+    }
+    if (twitterErrors.length > 0) {
+      reportItems.push(
+        formatMsg({
+          type: "Twitter sharing",
+          message: `Those tags are missing: ${twitterErrors.join(", ")}`
+        })
+      );
+      score -= 5;
+    }
+    console.log(reportItems);
+
     return {
       rawValue: data,
-      score: 100
+      score,
+      displayValue: false,
+      details: {
+        type: "table",
+        header: "View Details",
+        itemHeaders: [
+          {
+            type: "text",
+            itemType: "text",
+            text: "Info"
+          },
+          {
+            type: "text",
+            itemType: "text",
+            text: "Description"
+          }
+        ],
+        items: reportItems
+      }
     };
   }
 }
 
 module.exports = MicrodataAudit;
+
+const metaRules = ["keywords", "description"];
+const facebookRules = ["og:url", "og:title", "og:description", "og:image"];
+const twitterRules = [
+  "twitter:card",
+  "twitter:site",
+  "twitter:title",
+  "twitter:description",
+  "twitter:image"
+];
+
+const validator = (rules, metatags) => {
+  const missing = [];
+  rules.forEach(rule => {
+    if (!metatags[rule]) {
+      missing.push(rule);
+    }
+  });
+  return missing;
+};
+
+const validateMeta = ({ metatags }) => validator(metaRules, metatags);
+const validateFacebook = ({ metatags }) => validator(facebookRules, metatags);
+const validateTwitter = ({ metatags }) => validator(twitterRules, metatags);
+
+const formatMsg = ({ type, message }) => [
+  {
+    type: "text",
+    text: type
+  },
+  {
+    type: "text",
+    text: message
+  }
+];

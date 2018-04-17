@@ -14,7 +14,9 @@ const Gatherer = require("lighthouse").Gatherer;
 class TakeHTML extends Gatherer {
   afterPass(options, loadData) {
     const driver = options.driver;
-    return driver.evaluateAsync("document.documentElement.innerHTML");
+    return driver.evaluateAsync(
+      "new XMLSerializer().serializeToString(document)"
+    );
   }
 }
 

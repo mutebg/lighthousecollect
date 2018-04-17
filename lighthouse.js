@@ -2,7 +2,7 @@ const lighthouse = require("lighthouse");
 const chromeLauncher = require("chrome-launcher");
 
 const config = {
-  //extends: "lighthouse:default",
+  extends: "lighthouse:default",
 
   // 2. Add gatherer to the default Lighthouse load ('pass') of the page.
   passes: [

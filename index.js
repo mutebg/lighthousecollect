@@ -7,16 +7,10 @@ const map = require("lodash").map;
 const utils = require("./utils");
 
 //list of tool
-const a11y = require("./a11y");
-const htmlvalidator = require("./htmlvalidator");
 const lighthouse = require("./lighthouse");
-const microdata = require("./microdata");
 
 const tools = {
-  a11y,
-  htmlvalidator,
-  lighthouse,
-  microdata
+  lighthouse
 };
 
 const list = val => val.split(",").map(i => i.trim());
