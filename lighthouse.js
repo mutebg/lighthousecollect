@@ -2,25 +2,32 @@ const lighthouse = require("lighthouse");
 const chromeLauncher = require("chrome-launcher");
 
 const config = {
-  extends: "lighthouse:default",
+  //extends: "lighthouse:default",
 
   // 2. Add gatherer to the default Lighthouse load ('pass') of the page.
   passes: [
     {
       passName: "defaultPass",
-      gatherers: ["html-gatherer"]
+      gatherers: ["gatherers/html", "gatherers/microdata"]
     }
   ],
 
   // 3. Add custom audit to the list of audits 'lighthouse:default' will run.
-  audits: ["microdata-audit", "htmlvalidator-audit"],
+  audits: [
+    "audits/facebook-audit",
+    "audits/twitter-audit",
+    "audits/htmlvalidator-audit"
+  ],
 
   // 4. Create a new 'My site metrics' section in the default report for our results.
   categories: {
     microdata: {
       name: "Microdata metrics",
       description: "___TODO___",
-      audits: [{ id: "microdata-audit", weight: 1 }]
+      audits: [
+        { id: "twitter-audit", weight: 1 },
+        { id: "facebook-audit", weight: 1 }
+      ]
     },
     validator: {
       name: "HTML validator metrics",

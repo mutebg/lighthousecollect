@@ -32,11 +32,31 @@ class HTMLvalidatorAudit extends Audit {
     options.data = html;
 
     return validator(options)
-      .then(data => ({
-        rawValue: data.messages,
-        score: 100,
-        displayValue: "IS FINE"
-      }))
+      .then(data => {
+        const headings = [
+          { key: "type", itemType: "text", text: "type" },
+          { key: "message", itemType: "text", text: "type" },
+          { key: "lastLine", itemType: "text", text: "type" },
+          { key: "firstColumn", itemType: "text", text: "type" },
+          { key: "extract", itemType: "text", text: "type" }
+        ];
+        const messages = data.messages.map(
+          ({ type, message, lastLine, firstColumn, extract }) => ({
+            type,
+            message,
+            lastLine,
+            firstColumn,
+            extract
+          })
+        );
+        const details = Audit.makeTableDetails(headings, messages);
+
+        return {
+          rawValue: data.messages.length === 0,
+          score: data.messages.length === 0,
+          details
+        };
+      })
       .catch(error => {
         console.error(error);
       });
