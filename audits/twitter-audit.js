@@ -5,9 +5,10 @@ class TwitterAudit extends Audit {
   static get meta() {
     return {
       name: "twitter-audit",
-      description: "....TODO....",
-      failureDescription: "....TODO....",
-      helpText: "....TODO....",
+      description: "The page has all metatags for sharing in twitter",
+      failureDescription: "",
+      helpText:
+        "[Learn more](https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/markup)",
       requiredArtifacts: ["Microdata"]
     };
   }

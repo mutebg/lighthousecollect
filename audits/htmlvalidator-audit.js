@@ -20,9 +20,10 @@ class HTMLvalidatorAudit extends Audit {
   static get meta() {
     return {
       name: "htmlvalidator-audit",
-      description: "....TODO....",
-      failureDescription: "....TODO....",
-      helpText: "....TODO....",
+      description: "Page has a valida HTML",
+      failureDescription: "",
+      helpText:
+        "For more detail view check W3C validator [Learn more](https://validator.w3.org/)",
       requiredArtifacts: ["TakeHTML"]
     };
   }
@@ -40,20 +41,20 @@ class HTMLvalidatorAudit extends Audit {
           { key: "firstColumn", itemType: "text", text: "type" },
           { key: "extract", itemType: "text", text: "type" }
         ];
-        const messages = data.messages.map(
-          ({ type, message, lastLine, firstColumn, extract }) => ({
+        const messages = data.messages
+          .filter(({ type }) => type === "error")
+          .map(({ type, message, lastLine, firstColumn, extract }) => ({
             type,
             message,
             lastLine,
             firstColumn,
             extract
-          })
-        );
+          }));
         const details = Audit.makeTableDetails(headings, messages);
 
         return {
-          rawValue: data.messages.length === 0,
-          score: data.messages.length === 0,
+          rawValue: messages.length === 0,
+          score: messages.length === 0,
           details
         };
       })
