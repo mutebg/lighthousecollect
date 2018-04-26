@@ -17,7 +17,8 @@ const config = {
     "audits/facebook-audit",
     "audits/twitter-audit",
     "audits/htmlvalidator-audit",
-    "audits/outline-audit"
+    "audits/outline-audit",
+    "audits/lookup-audit"
   ],
 
   // 4. Create a new 'My site metrics' section in the default report for our results.
@@ -25,9 +26,10 @@ const config = {
     microdata: {
       name: "Microdata metrics",
       audits: [
-        //{ id: "twitter-audit", weight: 1 },
-        //{ id: "facebook-audit", weight: 1 },
-        { id: "outline-audit", weight: 1 }
+        { id: "twitter-audit", weight: 1 },
+        { id: "facebook-audit", weight: 1 },
+        { id: "outline-audit", weight: 1 },
+        { id: "lookup-audit", weight: 1 }
       ]
     },
     validator: {
