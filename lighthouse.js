@@ -36,6 +36,9 @@ const config = {
       name: "HTML validator metrics",
       audits: [{ id: "htmlvalidator-audit", weight: 1 }]
     }
+  },
+  options: {
+    bla: 1
   }
 };
 const flags = {
@@ -46,6 +49,7 @@ const flags = {
   expectations: false,
   json: false,
   chromeFlags: []
+
   //output: "json"
   //"chrome-flags": "--headless"
 };

@@ -3,7 +3,19 @@ const path = require("path");
 const writeFile = util.promisify(require("fs").writeFile);
 const request = require("request-promise-native");
 
+const CONFIG_NAME = "config.json";
+
 const handleError = e => console.log(e);
+
+const getConfigFile = name => {
+  const configName = name || CONFIG_NAME;
+  try {
+    config = require(path.resolve(process.cwd(), configName));
+    return config;
+  } catch (e) {
+    throw Error("Config does not exists: " + configName);
+  }
+};
 
 const saveAsFile = ({ task, project, outputpath }, validatorName, json) => {
   const fileName = `${validatorName}-${project}-${task}.json`;
@@ -38,5 +50,7 @@ const saveOnWeb = (
 module.exports = {
   handleError,
   saveAsFile,
-  saveOnWeb
+  saveOnWeb,
+  getConfigFile,
+  CONFIG_NAME
 };

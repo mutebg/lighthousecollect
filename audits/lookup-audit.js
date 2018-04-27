@@ -12,10 +12,7 @@ class LookupAudit extends Audit {
   }
 
   static audit(artifacts) {
-    const lookupFor = [
-      "https://twitter.com/Brandpunt_plus",
-      "https://www.facebook.com/brandpuntplus/"
-    ];
+    const lookupFor = globalConfig.lookup;
     const html = artifacts.TakeHTML;
     const errors = lookupFor
       .map(item => {

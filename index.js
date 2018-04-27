@@ -3,7 +3,6 @@
 const program = require("commander");
 const identity = require("lodash").identity;
 const map = require("lodash").map;
-
 const utils = require("./utils");
 
 //list of tool
@@ -32,7 +31,7 @@ const options = [
     param: "urls",
     description: "List of urls, separeted with commas",
     validation: list,
-    defValue: []
+    defValue: null
   },
   {
     param: "skip",
@@ -50,13 +49,19 @@ const options = [
     param: "outputpath",
     description: "Default outputh path",
     validation: identity,
-    defValue: ""
+    defValue: null
   },
   {
     param: "remoteserver",
     description: "HTTP server",
     validator: identity,
-    defValue: ""
+    defValue: null
+  },
+  {
+    param: "config",
+    description: "Path to config file",
+    validator: identity,
+    defValue: utils.CONFIG_NAME
   }
 ];
 
@@ -67,30 +72,26 @@ options.forEach(({ param, description, validation, defValue }) => {
 });
 program.parse(process.argv);
 
-const config = {};
+const config = utils.getConfigFile(program.config);
 options.forEach(({ param }) => {
-  config[param] = program[param];
+  if (program[param]) {
+    config[param] = program[param];
+  }
 });
+
+//is global object so anyone can access the config trought files
+globalConfig = config;
 
 map(tools, (validator, key) => ({
   name: key,
   validator
-}))
-  .filter(({ name }) => {
-    if (config.only) {
-      return config.only === name;
-    } else if (config.skip) {
-      return !config.skip.includes(name);
-    }
-    return true;
-  })
-  .forEach(({ validator, name }) => {
-    validator
-      .run(config)
-      //.then(data => utils.saveOnWeb(config, name, data))
-      .then(data => utils.saveAsFile(config, name, data))
-      .then(() => {
-        console.log("DONE:" + name);
-      })
-      .catch(console.log);
-  });
+})).forEach(({ validator, name }) => {
+  validator
+    .run(config)
+    //.then(data => utils.saveOnWeb(config, name, data))
+    .then(data => utils.saveAsFile(config, name, data))
+    .then(() => {
+      console.log("DONE:" + name);
+    })
+    .catch(console.log);
+});

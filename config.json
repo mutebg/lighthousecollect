@@ -1,0 +1,12 @@
+{
+  "validators": [],
+  "task": null,
+  "project": "brandpunt",
+  "urls": ["https://brandpuntplus.kro-ncrv.nl/"],
+  "outputpath": "",
+  "remoteserver": "http://localhost:3000",
+  "lookup": [
+    "https://twitter.com/Brandpunt_plus",
+    "https://www.facebook.com/brandpuntplus/"
+  ]
+}
