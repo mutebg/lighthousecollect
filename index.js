@@ -8,10 +8,6 @@ const utils = require("./utils");
 //list of tool
 const lighthouse = require("./lighthouse");
 
-const tools = {
-  lighthouse
-};
-
 const list = val => val.split(",").map(i => i.trim());
 
 const options = [
@@ -79,19 +75,18 @@ options.forEach(({ param }) => {
   }
 });
 
+config.urls = utils.prepareUrls(config);
+console.log(config.urls);
+
 //is global object so anyone can access the config trought files
 globalConfig = config;
 
-map(tools, (validator, key) => ({
-  name: key,
-  validator
-})).forEach(({ validator, name }) => {
-  validator
-    .run(config)
-    //.then(data => utils.saveOnWeb(config, name, data))
-    .then(data => utils.saveAsFile(config, name, data))
-    .then(() => {
-      console.log("DONE:" + name);
-    })
-    .catch(console.log);
-});
+//run lighthouse
+lighthouse
+  .run(config)
+  //.then(data => utils.saveOnWeb(config, name, data))
+  .then(data => utils.saveAsFile(config, data))
+  .then(() => {
+    console.log("DONE");
+  })
+  .catch(console.log);

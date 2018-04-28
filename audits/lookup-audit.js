@@ -1,4 +1,5 @@
 const Audit = require("lighthouse").Audit;
+const utils = require("../utils");
 
 class LookupAudit extends Audit {
   static get meta() {
@@ -7,13 +8,14 @@ class LookupAudit extends Audit {
       description: "Check for existing text inside the code",
       failureDescription: "",
       helpText: "__TODO__",
-      requiredArtifacts: ["TakeHTML"]
+      requiredArtifacts: ["URL", "TakeHTML"]
     };
   }
 
-  static audit(artifacts) {
-    const lookupFor = globalConfig.lookup;
+  static audit(artifacts, options) {
     const html = artifacts.TakeHTML;
+    const url = artifacts.URL.initialUrl;
+    const lookupFor = utils.getUrlOptions(globalConfig, url).lookup;
     const errors = lookupFor
       .map(item => {
         const isHere = html.includes(item);

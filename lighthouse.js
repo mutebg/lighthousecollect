@@ -1,8 +1,9 @@
 const lighthouse = require("lighthouse");
 const chromeLauncher = require("chrome-launcher");
+const map = require("lodash/map");
 
 const config = {
-  //extends: "lighthouse:default",
+  extends: "lighthouse:default",
 
   // 2. Add gatherer to the default Lighthouse load ('pass') of the page.
   passes: [
@@ -63,7 +64,9 @@ const run = ({ urls }) =>
       flags.port = chrome.port;
 
       async function executeSequentially() {
-        const tasks = urls.map(url => () => lighthouse(url, flags, config));
+        const tasks = map(urls, (_, url) => () =>
+          lighthouse(url, flags, config)
+        );
         const completeTasks = [];
         for (const fn of tasks) {
           try {

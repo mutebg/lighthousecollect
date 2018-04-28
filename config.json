@@ -2,11 +2,26 @@
   "validators": [],
   "task": null,
   "project": "brandpunt",
-  "urls": ["https://brandpuntplus.kro-ncrv.nl/"],
+  "urls": [
+    {
+      "url": "https://brandpuntplus.kro-ncrv.nl/brandpuntplus/mormoon-gay/",
+      "options": {
+        "lookup": ["homo"],
+        "microdata": {
+          "jsonld": ["NewsArticle"]
+        }
+      }
+    }
+  ],
   "outputpath": "",
   "remoteserver": "http://localhost:3000",
-  "lookup": [
-    "https://twitter.com/Brandpunt_plus",
-    "https://www.facebook.com/brandpuntplus/"
-  ]
+  "options": {
+    "lookup": [
+      "https://twitter.com/Brandpunt_plus",
+      "https://www.facebook.com/brandpuntplus/"
+    ],
+    "microdata": {
+      "jsonld": ["NewsArticle"]
+    }
+  }
 }

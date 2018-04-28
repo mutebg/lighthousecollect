@@ -4,10 +4,7 @@
   "description": "",
   "main": "index.js",
   "directories": {
-    "lighthouse": "node microdata.js",
-    "html": "node htmlvalidator",
-    "axe": "./node_modules/.bin/axe https://elements.nl",
-    "a11y": "node a11y"
+    "lighthouse": "node microdata.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

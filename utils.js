@@ -2,6 +2,9 @@ const util = require("util");
 const path = require("path");
 const writeFile = util.promisify(require("fs").writeFile);
 const request = require("request-promise-native");
+const mergeWith = require("lodash/mergeWith");
+const merge = require("lodash/merge");
+const isArray = require("lodash/isArray");
 
 const CONFIG_NAME = "config.json";
 
@@ -17,27 +20,21 @@ const getConfigFile = name => {
   }
 };
 
-const saveAsFile = ({ task, project, outputpath }, validatorName, json) => {
-  const fileName = `${validatorName}-${project}-${task}.json`;
+const saveAsFile = ({ task, project, outputpath }, json) => {
+  const fileName = `${project}-${task}.json`;
   const fullPath = path.resolve(process.cwd(), outputpath, fileName);
   return writeFile(fullPath, JSON.stringify(json, null, "\t"), "utf8");
 };
 
-const saveOnWeb = (
-  { task, project, remoteserver, urls },
-  validatorName,
-  json
-) => {
+const saveOnWeb = ({ task, project, remoteserver, urls }, json) => {
   Promise.all(
     urls.map((url, index) => {
       const post = {
-        validator: validatorName,
         project,
         url,
         task,
         data: json[index]
       };
-      console.log(post);
       return request({
         method: "POST",
         url: remoteserver + "/api/record",
@@ -47,10 +44,39 @@ const saveOnWeb = (
     })
   );
 };
+
+const prepareUrls = config => {
+  const standartOptions = config.options;
+  const mergeCustomizer = (objValue, srcValue) => {
+    if (isArray(objValue)) {
+      return objValue.concat(srcValue);
+    } else {
+      return merge(objValue, srcValue);
+    }
+  };
+
+  return config.urls.reduce((prev, curr) => {
+    if (typeof curr === "string") {
+      prev[curr] = standartOptions;
+    } else if (curr.url) {
+      prev[curr.url] = mergeWith(
+        standartOptions,
+        curr.options,
+        mergeCustomizer
+      );
+    }
+    return prev;
+  }, {});
+};
+
+const getUrlOptions = (config, url) => config.urls[url];
+
 module.exports = {
   handleError,
   saveAsFile,
   saveOnWeb,
   getConfigFile,
+  prepareUrls,
+  getUrlOptions,
   CONFIG_NAME
 };
