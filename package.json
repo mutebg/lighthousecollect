@@ -3,23 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "directories": {
-    "lighthouse": "node microdata.js"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Stoyan Delev i@stoyandelev.com",
+  "license": "MIT",
   "dependencies": {
-    "a11y": "^0.5.1",
-    "axe-cli": "^3.0.0",
     "chrome-launcher": "^0.10.2",
     "commander": "^2.15.1",
     "html-validator": "^2.2.3",
     "lighthouse": "^2.9.4",
     "lodash": "^4.17.5",
-    "open-graph": "^0.2.3",
     "request": "^2.85.0",
     "request-promise-native": "^1.0.5",
     "web-auto-extractor": "^1.0.17"
