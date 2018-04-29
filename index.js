@@ -76,7 +76,6 @@ options.forEach(({ param }) => {
 });
 
 config.urls = utils.prepareUrls(config);
-console.log(config.urls);
 
 //is global object so anyone can access the config trought files
 globalConfig = config;

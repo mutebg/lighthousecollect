@@ -4,12 +4,9 @@
   "project": "brandpunt",
   "urls": [
     {
-      "url": "https://brandpuntplus.kro-ncrv.nl/brandpuntplus/mormoon-gay/",
+      "url": "https://www.bggumi.com/eshop/productinfo/1/15238675/",
       "options": {
-        "lookup": ["homo"],
-        "microdata": {
-          "jsonld": ["NewsArticle"]
-        }
+        "lookup": ["homo"]
       }
     }
   ],
@@ -19,9 +16,6 @@
     "lookup": [
       "https://twitter.com/Brandpunt_plus",
       "https://www.facebook.com/brandpuntplus/"
-    ],
-    "microdata": {
-      "jsonld": ["NewsArticle"]
-    }
+    ]
   }
 }

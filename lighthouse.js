@@ -9,7 +9,12 @@ const config = {
   passes: [
     {
       passName: "defaultPass",
-      gatherers: ["gatherers/html", "gatherers/microdata", "gatherers/outline"]
+      gatherers: [
+        "gatherers/html",
+        "gatherers/microdata",
+        "gatherers/outline",
+        "gatherers/structureddata"
+      ]
     }
   ],
 
@@ -19,7 +24,8 @@ const config = {
     "audits/twitter-audit",
     "audits/htmlvalidator-audit",
     "audits/outline-audit",
-    "audits/lookup-audit"
+    "audits/lookup-audit",
+    "audits/structureddata-audit"
   ],
 
   // 4. Create a new 'My site metrics' section in the default report for our results.
@@ -30,7 +36,8 @@ const config = {
         { id: "twitter-audit", weight: 1 },
         { id: "facebook-audit", weight: 1 },
         { id: "outline-audit", weight: 1 },
-        { id: "lookup-audit", weight: 1 }
+        { id: "lookup-audit", weight: 1 },
+        { id: "structureddata-audit", weight: 2 }
       ]
     },
     validator: {
