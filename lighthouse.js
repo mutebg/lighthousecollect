@@ -65,7 +65,12 @@ const flags = {
 const run = ({ urls }) =>
   chromeLauncher
     .launch({
-      chromeFlags: ["--headless"]
+      chromeFlags: [
+        "--headless",
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-gpu"
+      ]
     })
     .then(chrome => {
       flags.port = chrome.port;

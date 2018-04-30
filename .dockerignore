@@ -1,0 +1,12 @@
+node_modules
+.gitignore
+.dockerignore
+Dockerfile*
+*-debug.log
+*-error.log
+.git
+.hg
+.svn
+README.md
+report.*
+docker_*.sh
