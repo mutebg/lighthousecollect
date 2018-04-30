@@ -56,10 +56,10 @@ const flags = {
   view: false,
   expectations: false,
   json: false,
-  chromeFlags: []
+  chromeFlags: [],
 
   //output: "json"
-  //"chrome-flags": "--headless"
+  "chrome-flags": "--headless"
 };
 
 const run = ({ urls }) =>

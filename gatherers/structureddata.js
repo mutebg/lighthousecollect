@@ -10,7 +10,7 @@ class Structuredata extends Gatherer {
         request({
           method: "POST",
           url:
-            " https://search.google.com/structured-data/testing-tool/validate",
+            "https://search.google.com/structured-data/testing-tool/validate",
           form: {
             //url: options.initialUrl
             html
