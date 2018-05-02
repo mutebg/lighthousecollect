@@ -6,25 +6,25 @@ const mergeWith = require("lodash/mergeWith");
 const merge = require("lodash/merge");
 const isArray = require("lodash/isArray");
 
-const CONFIG_NAME = "config.json";
+//const CONFIG_NAME = "config.json";
 
 const handleError = e => console.log(e);
 
-const getConfigFile = name => {
-  const configName = name || CONFIG_NAME;
-  try {
-    config = require(path.resolve(process.cwd(), configName));
-    return config;
-  } catch (e) {
-    throw Error("Config does not exists: " + configName);
-  }
-};
+// const getConfigFile = name => {
+//   const configName = name || CONFIG_NAME;
+//   try {
+//     config = require(path.resolve(process.cwd(), configName));
+//     return config;
+//   } catch (e) {
+//     throw Error("Config does not exists: " + configName);
+//   }
+// };
 
-const saveAsFile = ({ task, project, outputpath }, json) => {
-  const fileName = `${project}-${task}.json`;
-  const fullPath = path.resolve(process.cwd(), outputpath, fileName);
-  return writeFile(fullPath, JSON.stringify(json, null, "\t"), "utf8");
-};
+// const saveAsFile = ({ task, project, outputpath }, json) => {
+//   const fileName = `${project}-${task}.json`;
+//   const fullPath = path.resolve(process.cwd(), outputpath, fileName);
+//   return writeFile(fullPath, JSON.stringify(json, null, "\t"), "utf8");
+// };
 
 const saveOnWeb = ({ task, project, remoteserver, urls }, json) => {
   Promise.all(
@@ -71,12 +71,14 @@ const prepareUrls = config => {
 
 const getUrlOptions = (config, url) => config.urls[url];
 
+const validateConfig = config => config;
+
 module.exports = {
   handleError,
-  saveAsFile,
+  //saveAsFile,
   saveOnWeb,
-  getConfigFile,
+  //getConfigFile,
   prepareUrls,
   getUrlOptions,
-  CONFIG_NAME
+  validateConfig
 };
