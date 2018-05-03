@@ -13,12 +13,11 @@ app.use(bodyParser.json({ limit: "50mb" }));
 const staticPath = path.join(__dirname, "../dist");
 app.use(express.static(staticPath));
 
+//DB setup
 const mongoose = require("mongoose");
-
 const db =
   "mongodb://admin:7HDO94TwHk1fUjHq@cluster0-shard-00-00-3sglf.mongodb.net:27017,cluster0-shard-00-01-3sglf.mongodb.net:27017,cluster0-shard-00-02-3sglf.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin";
 //const db = "mongodb://db/app"
-//DB setup
 mongoose.connect(db);
 
 const report = require("./model");
@@ -49,12 +48,8 @@ app.post("/do", (req, res) => {
     .catch(console.log);
 });
 
-app.get("/", (req, res) => {});
-
 app.get("/api/project", (req, res) => {
-  report.find().distinct("project", (error, data) => {
-    res.json(data);
-  });
+  return report.getProjects().then(data => res.json(data));
 });
 
 app.get("/api/list/", (req, res) => {
@@ -65,19 +60,11 @@ app.get("/api/list/", (req, res) => {
     }
     return prev;
   }, {});
-
-  report
-    .find(filter)
-    .sort({ created: "desc" })
-    .exec((err, data) => {
-      res.json(data);
-    });
+  return report.getList(filter).then(data => res.json(data));
 });
 
 app.get("/api/view/:id", (req, res) => {
-  report.findOne({ _id: req.params.id }).exec((err, data) => {
-    res.json(data);
-  });
+  return report.getById(req.params.id).then(data => res.json(data));
 });
 
 module.exports = app;

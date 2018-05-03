@@ -22,4 +22,21 @@ const report = mongoose.model(
   })
 );
 
-module.exports = report;
+const getProjects = () => report.find().distinct("project");
+
+const getList = filter =>
+  report
+    .find(filter)
+    .sort({ created: "desc" })
+    .exec();
+
+const getById = id => report.findOne({ _id: id }).exec();
+
+const create = data => report.create(data);
+
+module.exports = {
+  getProjects,
+  getList,
+  getById,
+  create
+};

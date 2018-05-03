@@ -26,24 +26,24 @@ const handleError = e => console.log(e);
 //   return writeFile(fullPath, JSON.stringify(json, null, "\t"), "utf8");
 // };
 
-const saveOnWeb = ({ task, project, remoteserver, urls }, json) => {
-  Promise.all(
-    urls.map((url, index) => {
-      const post = {
-        project,
-        url,
-        task,
-        data: json[index]
-      };
-      return request({
-        method: "POST",
-        url: remoteserver + "/api/record",
-        json: true,
-        body: post
-      });
-    })
-  );
-};
+// const saveOnWeb = ({ task, project, remoteserver, urls }, json) => {
+//   Promise.all(
+//     urls.map((url, index) => {
+//       const post = {
+//         project,
+//         url,
+//         task,
+//         data: json[index]
+//       };
+//       return request({
+//         method: "POST",
+//         url: remoteserver + "/api/record",
+//         json: true,
+//         body: post
+//       });
+//     })
+//   );
+// };
 
 const prepareUrls = config => {
   const standartOptions = config.options;
@@ -76,7 +76,7 @@ const validateConfig = config => config;
 module.exports = {
   handleError,
   //saveAsFile,
-  saveOnWeb,
+  //saveOnWeb,
   //getConfigFile,
   prepareUrls,
   getUrlOptions,
