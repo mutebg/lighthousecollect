@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "author": "Stoyan Delev i@stoyandelev.com",
   "license": "MIT",
@@ -16,6 +17,13 @@
     "lodash": "^4.17.5",
     "request": "^2.85.0",
     "request-promise-native": "^1.0.5",
-    "web-auto-extractor": "^1.0.17"
+    "web-auto-extractor": "^1.0.17",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "mongoose": "^5.0.12"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
   }
 }
