@@ -7,7 +7,7 @@ class StructuredAudit extends Audit {
       name: "structureddata-audit",
       description: "Check document for structured data",
       failureDescription: "",
-      helpText: "...TODO...",
+      helpText: "More information TODO",
       requiredArtifacts: ["Structuredata"]
     };
   }

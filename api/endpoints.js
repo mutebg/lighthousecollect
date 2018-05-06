@@ -33,7 +33,7 @@ router.post("/do", (req, res) => {
     .catch(console.log);
 });
 
-router.get("/project", (req, res) => {
+router.get("/projects", (req, res) => {
   return report.getProjects().then(data => res.json(data));
 });
 
@@ -60,7 +60,7 @@ router.get("/list/", (req, res) => {
       }
 
       const short = {
-        _id: current.id,
+        id: current._id,
         url: current.url,
         data: transforms.overview(current),
         total: Math.round(current.score)
@@ -75,8 +75,15 @@ router.get("/list/", (req, res) => {
   });
 });
 
-router.get("/view/:id", (req, res) => {
+router.get("/view/:id/json", (req, res) => {
   return report.getById(req.params.id).then(data => res.json(data));
+});
+router.get("/view/:id/html", (req, res) => {
+  const ReportGenerator = require("../node_modules/lighthouse/lighthouse-core/report/v2/report-generator");
+  return report.getById(req.params.id).then(json => {
+    const html = new ReportGenerator().generateReportHtml(json);
+    res.send(html);
+  });
 });
 
 module.exports = router;

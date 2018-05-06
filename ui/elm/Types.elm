@@ -1,10 +1,16 @@
 module Types exposing (..)
 
+import Http
+import Navigation
 import Date exposing (..)
 
 
 type Msg
     = NoOp
+    | UrlChange Navigation.Location
+    | LoadProjects (Result Http.Error (List Project))
+    | LoadReports (Result Http.Error (List ReportListItem))
+    | LoadReportDetails (Result Http.Error String)
 
 
 type alias Project =
@@ -26,7 +32,8 @@ type alias ReportSummaryData =
 
 
 type alias ReportSummary =
-    { url : URL
+    { id : String
+    , url : URL
     , total : Int
     , data : List ReportSummaryData
     }
@@ -34,7 +41,7 @@ type alias ReportSummary =
 
 type alias ReportListItem =
     { task : TaskId
-    , generatedTime : Date
+    , generatedTime : String
     , urls : List ReportSummary
     }
 
@@ -48,8 +55,16 @@ type alias ReportFilter =
     }
 
 
+type Page
+    = Home
+    | ViewProject String
+    | ViewReport String
+
+
 type alias Model =
-    { projects : List Project
+    { page : Page
+    , projects : List Project
     , reports : List ReportListItem
+    , details : Maybe String
     , filter : ReportFilter
     }

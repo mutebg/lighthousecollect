@@ -1,5 +1,8 @@
 const config = {
   extends: "lighthouse:default",
+  settings: {
+    skipAudits: ["critical-request-chains"]
+  },
 
   // 2. Add gatherer to the default Lighthouse load ('pass') of the page.
   passes: [
@@ -28,6 +31,7 @@ const config = {
   categories: {
     microdata: {
       name: "Microdata metrics",
+      description: "TODO",
       audits: [
         { id: "twitter-audit", weight: 1 },
         { id: "facebook-audit", weight: 1 },
@@ -38,6 +42,7 @@ const config = {
     },
     validator: {
       name: "HTML validator metrics",
+      description: "TODO",
       audits: [{ id: "htmlvalidator-audit", weight: 1 }]
     }
   },

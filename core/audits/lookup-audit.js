@@ -7,7 +7,7 @@ class LookupAudit extends Audit {
       name: "lookup-audit",
       description: "Check for existing text inside the code",
       failureDescription: "",
-      helpText: "__TODO__",
+      helpText: "More information TODO",
       requiredArtifacts: ["URL", "TakeHTML"]
     };
   }

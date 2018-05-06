@@ -8,7 +8,7 @@ class FacebookAudit extends Audit {
       description: "The page has all metatags for sharing in faecbook",
       failureDescription: "",
       helpText:
-        "[Learn more](https://developers.facebook.com/docs/sharing/webmasters#markup.)",
+        "More information [Learn more](https://developers.facebook.com/docs/sharing/webmasters#markup)",
       requiredArtifacts: ["Microdata"]
     };
   }
