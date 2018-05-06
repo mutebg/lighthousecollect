@@ -4,6 +4,20 @@
 
 // can add Boostrap overrides, additional Sass/CSS below...
 
+body {
+  --primary: #7500a9;
+  --primary-ultra-light: #ecc3ff;
+  --pass-color: #2b882f;
+  --average-color: #ef6c00;
+  --fail-color: #df332f;
+  --pill-color: var(--primary);
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: inherit;
+}
+
 .report-iframe {
   width: 100vw;
   height: 100vh;
@@ -11,4 +25,54 @@
   top: 0;
   left: 0;
   border: 0;
+}
+
+.table-secondary {
+  background: var(--primary-ultra-light);
+  color: var(--primary);
+  font-weight: bold;
+
+  td:first-child {
+    border-radius: 10px 0 0 0;
+    padding-left: 0.2em;
+  }
+
+  td:last-child {
+    border-radius: 0 10px 0 0;
+    padding-right: 0.2em;
+  }
+}
+
+.pill {
+  --border-radius: 0.85em;
+  border: 1px solid var(--pill-color);
+  border-right: 0;
+  display: inline-block;
+  padding-left: var(--border-radius);
+  border-radius: var(--border-radius);
+  color: var(--pill-color);
+  margin: 0.2em;
+  //height: 1.8em;
+
+  &--pass {
+    --pill-color: var(--pass-color);
+  }
+  &--fail {
+    color: var(--fail-color);
+    --pill-color: var(--fail-color);
+  }
+
+  &--average {
+    color: var(--average-color);
+    --pill-color: var(--average-color);
+  }
+}
+
+.badge {
+  border-radius: var(--border-radius);
+  padding: 0em var(--border-radius);
+  background: var(--pill-color);
+  color: #fff;
+  margin-left: calc(var(--border-radius) / 2);
+  display: inline-block;
 }

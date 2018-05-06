@@ -48,17 +48,13 @@ reportTable list =
                 [ td []
                     [ a [ href <| "#report/" ++ u.id ] [ text u.url ]
                     ]
-                , td [] [ span [ class "badge badge-pill badge-primary" ] [ text <| toString u.total ] ]
+                , td []
+                    [ createPill "total" u.total ]
                 ]
             , tr []
                 [ td [ colspan 2 ]
                     (List.map
-                        (\d ->
-                            span [ class "border border-primary rounded" ]
-                                [ text d.label
-                                , span [ class "badge badge-pill badge-primary" ] [ text <| toString d.value ]
-                                ]
-                        )
+                        (\d -> createPill d.label d.value)
                         u.data
                     )
                 ]
@@ -100,4 +96,26 @@ projectTable list =
                 ]
             , tbody []
                 (List.map (\p -> tr [] [ td [] [ createLink p ] ]) list)
+            ]
+
+
+reportStatus : Int -> String
+reportStatus value =
+    if value > 75 then
+        "pass"
+    else if value > 45 then
+        "average"
+    else
+        "fail"
+
+
+createPill : String -> Int -> Html Msg
+createPill label value =
+    let
+        extraClass =
+            reportStatus value
+    in
+        span [ class <| "pill pill--" ++ extraClass ]
+            [ text label
+            , span [ class "badge" ] [ text <| toString value ]
             ]

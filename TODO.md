@@ -1,9 +1,17 @@
-Run in docker
+# IMPROVEMENTS
 
-UI
+* API: inconsistent and slow
+* Run in docker: in progress, need more testing
+* Config validator
 
-cURL example
+# FEATURES
 
-Config validator
+* Graphs
+* CLI
 
-CLI
+## DOCUMENTATION
+
+* Readme
+* Full config specification in doc
+* cURL example
+* Deploy demo

@@ -37,7 +37,7 @@ const run = ({ urls }) =>
         for (const fn of tasks) {
           try {
             const result = await fn();
-            //delete result.artifacts;
+            delete result.artifacts;
             completeTasks.push(result);
           } catch (err) {
             console.log(err);
