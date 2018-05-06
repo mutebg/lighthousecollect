@@ -8,7 +8,7 @@ class TwitterAudit extends Audit {
       description: "The page has all metatags for sharing in twitter",
       failureDescription: "",
       helpText:
-        "[Learn more](https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/markup)",
+        "More information [Learn more](https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/markup)",
       requiredArtifacts: ["Microdata"]
     };
   }

@@ -71,7 +71,13 @@ const prepareUrls = config => {
 
 const getUrlOptions = (config, url) => config.urls[url];
 
-const validateConfig = config => config;
+const validateConfig = config => {
+  if (!config.task) {
+    config.task = +new Date();
+  }
+
+  return config;
+};
 
 module.exports = {
   handleError,

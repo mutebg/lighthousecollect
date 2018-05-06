@@ -8,7 +8,7 @@ class HTMLvalidatorAudit extends Audit {
   static get meta() {
     return {
       name: "htmlvalidator-audit",
-      description: "Page has a valida HTML",
+      description: "Page has a valid HTML",
       failureDescription: "",
       helpText:
         "For more detail view check W3C validator [Learn more](https://validator.w3.org/)",
