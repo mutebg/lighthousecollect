@@ -5,6 +5,7 @@ const request = require("request-promise-native");
 const mergeWith = require("lodash/mergeWith");
 const merge = require("lodash/merge");
 const isArray = require("lodash/isArray");
+const cloneDeep = require("lodash/cloneDeep");
 
 //const CONFIG_NAME = "config.json";
 
@@ -59,11 +60,16 @@ const prepareUrls = config => {
     if (typeof curr === "string") {
       prev[curr] = standartOptions;
     } else if (curr.url) {
-      prev[curr.url] = mergeWith(
-        standartOptions,
-        curr.options,
-        mergeCustomizer
-      );
+      const currentOptions = curr.options;
+      if (currentOptions) {
+        prev[curr.url] = mergeWith(
+          currentOptions,
+          cloneDeep(standartOptions),
+          mergeCustomizer
+        );
+      } else {
+        prev[curr.url] = standartOptions;
+      }
     }
     return prev;
   }, {});

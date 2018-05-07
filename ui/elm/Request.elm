@@ -25,11 +25,34 @@ getProjects =
 getReports : ReportFilter -> Cmd Msg
 getReports filter =
     let
-        projectParam =
-            filter.project |> Maybe.map (\c -> "project=" ++ c) |> Maybe.withDefault ""
+        paramsList =
+            [ filter.project
+                |> Maybe.map (\c -> "project=" ++ c)
+            , filter.url
+                |> Maybe.map (\c -> "url=" ++ c)
+            , filter.task
+                |> Maybe.map (\c -> "task=" ++ c)
+            , filter.dateFrom
+                |> Maybe.map (\c -> "dateFrom=" ++ c)
+            , filter.dateTo
+                |> Maybe.map (\c -> "dateTo=" ++ c)
+            ]
+
+        checkParam c =
+            case c of
+                Nothing ->
+                    False
+
+                Just a ->
+                    True
+
+        params =
+            paramsList
+                |> List.filter checkParam
+                |> List.map (\c -> Maybe.withDefault "" c)
 
         url =
-            apiBase ++ "list?" ++ projectParam
+            apiBase ++ "list?" ++ (String.join "&" params)
 
         request =
             Http.get url reportsListDecoder

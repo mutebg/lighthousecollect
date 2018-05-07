@@ -27,7 +27,7 @@ const getProjects = () => report.find().distinct("project");
 const getList = filter =>
   report
     .find(filter)
-    .sort({ created: "desc" })
+    .sort({ generatedTime: "desc" })
     .exec();
 
 const getById = id => report.findOne({ _id: id }).exec();

@@ -10,8 +10,7 @@ router.post("/do", (req, res) => {
   let config = req.body;
   config.urls = utils.prepareUrls(config);
   config = utils.validateConfig(config);
-  // res.json(config);
-  // return;
+  //return res.json(config);
   //is global object so anyone can access the config trought files
   globalConfig = config;
 
@@ -22,13 +21,16 @@ router.post("/do", (req, res) => {
       const created = rawData.map(rawDataItem => {
         rawDataItem.project = config.project;
         rawDataItem.task = config.task;
-        return report.create(rawData);
+        return report.create(rawDataItem);
       });
-      return Promise.all(created).then(
-        res.send({
-          ok: true
-        })
-      );
+      return Promise.all(created).then(data => {
+        const shortData = data.map(({ _id, task, url }) => ({
+          _id,
+          task,
+          url
+        }));
+        res.json(shortData);
+      });
     })
     .catch(console.log);
 });
@@ -38,13 +40,28 @@ router.get("/projects", (req, res) => {
 });
 
 router.get("/list/", (req, res) => {
-  const extraFilters = ["project", "url", "task", "dateFrom", "dateTo"];
+  const extraFilters = ["project", "url", "task"];
   const filter = extraFilters.reduce((prev, next) => {
     if (req.query[next]) {
       prev[next] = req.query[next];
     }
     return prev;
   }, {});
+
+  // date filter
+  const { dateFrom, dateTo } = req.query;
+  const datetimeFrom = dateFrom
+    ? new Date(Date.parse(dateFrom + " 00:00:00"))
+    : null;
+  const datetimeTo = dateTo ? new Date(Date.parse(dateTo + " 23:59:59")) : null;
+  if (datetimeFrom && datetimeTo) {
+    filter["generatedTime"] = { $gt: datetimeFrom, $lt: datetimeTo };
+  } else if (datetimeFrom) {
+    filter["generatedTime"] = { $gt: datetimeFrom };
+  } else if (datetimeTo) {
+    filter["generatedTime"] = { $lt: datetimeTo };
+  }
+
   return report.getList(filter).then(data => {
     const map = {};
     const groupedByTask = data.reduce((prev, current) => {

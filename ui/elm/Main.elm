@@ -100,6 +100,9 @@ update msg model =
             in
                 ( { newModel | page = newPage }, Cmd.batch msgs )
 
+        FilterReports ->
+            ( model, getReports model.filter )
+
         LoadProjects (Ok list) ->
             ( { model | projects = list }, Cmd.none )
 
@@ -108,6 +111,13 @@ update msg model =
 
         LoadReportDetails (Ok json) ->
             ( { model | details = Just json }, Cmd.none )
+
+        UpdateReportFilter key value ->
+            let
+                filter =
+                    updateFilter key (notEmptyMaybe value) model.filter
+            in
+                ( { model | filter = filter }, Cmd.none )
 
         _ ->
             ( model, Cmd.none )
@@ -121,7 +131,7 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div [ class "container" ]
+    div []
         [ Views.header
         , div [ class "container" ]
             [ case model.page of
@@ -149,5 +159,19 @@ updateFilter key value filter =
         "url" ->
             { filter | url = value }
 
+        "dateFrom" ->
+            { filter | dateFrom = value }
+
+        "dateTo" ->
+            { filter | dateTo = value }
+
         _ ->
             filter
+
+
+notEmptyMaybe : String -> Maybe String
+notEmptyMaybe value =
+    if value == "" then
+        Nothing
+    else
+        Just value

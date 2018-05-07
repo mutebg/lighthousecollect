@@ -1,8 +1,9 @@
 # IMPROVEMENTS
 
-* API: inconsistent and slow
+* API: report filter
+* API: slow
 * Run in docker: in progress, need more testing
-* Config validator
+* Validate config
 
 # FEATURES
 

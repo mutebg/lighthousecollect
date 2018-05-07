@@ -11,6 +11,8 @@ type Msg
     | LoadProjects (Result Http.Error (List Project))
     | LoadReports (Result Http.Error (List ReportListItem))
     | LoadReportDetails (Result Http.Error String)
+    | UpdateReportFilter String String
+    | FilterReports
 
 
 type alias Project =
@@ -50,8 +52,8 @@ type alias ReportFilter =
     { project : Maybe Project
     , task : Maybe TaskId
     , url : Maybe URL
-    , dateFrom : Maybe Date
-    , dateTo : Maybe Date
+    , dateFrom : Maybe String
+    , dateTo : Maybe String
     }
 
 

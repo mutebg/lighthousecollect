@@ -80,7 +80,43 @@ reportTable list =
 
 reportFilter : ReportFilter -> Html Msg
 reportFilter filter =
-    div [ class "result-filter" ] [ text "Result filter" ]
+    Html.form [ class "result-filter", onSubmit FilterReports ]
+        [ div [ class "row" ]
+            [ div [ class "column" ]
+                [ input
+                    [ type_ "text"
+                    , placeholder "Task"
+                    , onInput (\s -> UpdateReportFilter "task" s)
+                    ]
+                    []
+                ]
+            , div [ class "column" ]
+                [ input
+                    [ type_ "text"
+                    , placeholder "URL"
+                    , onInput (\s -> UpdateReportFilter "url" s)
+                    ]
+                    []
+                ]
+            , div [ class "column" ]
+                [ input
+                    [ type_ "date"
+                    , placeholder "Date from"
+                    , onInput (\s -> UpdateReportFilter "dateFrom" s)
+                    ]
+                    []
+                ]
+            , div [ class "column" ]
+                [ input
+                    [ type_ "date"
+                    , placeholder "Date to"
+                    , onInput (\s -> UpdateReportFilter "dateTo" s)
+                    ]
+                    []
+                ]
+            , div [ class "column" ] [ button [ type_ "submit", class "button-primary" ] [ text "Filter" ] ]
+            ]
+        ]
 
 
 projectTable : List Project -> Html Msg
