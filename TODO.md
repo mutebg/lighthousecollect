@@ -1,9 +1,9 @@
 # IMPROVEMENTS
 
-* API: report filter
 * API: slow
 * Run in docker: in progress, need more testing
 * Validate config
+* Production version
 
 # FEATURES
 

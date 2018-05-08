@@ -6,6 +6,7 @@ const mergeWith = require("lodash/mergeWith");
 const merge = require("lodash/merge");
 const isArray = require("lodash/isArray");
 const cloneDeep = require("lodash/cloneDeep");
+const validator = require("./validator");
 
 //const CONFIG_NAME = "config.json";
 
@@ -46,7 +47,12 @@ const handleError = e => console.log(e);
 //   );
 // };
 
-const prepareUrls = config => {
+const prepareConfig = config => {
+  if (!config.task) {
+    config.task = +new Date();
+  }
+
+  // prepare urls
   const standartOptions = config.options;
   const mergeCustomizer = (objValue, srcValue) => {
     if (isArray(objValue)) {
@@ -56,7 +62,7 @@ const prepareUrls = config => {
     }
   };
 
-  return config.urls.reduce((prev, curr) => {
+  config.urls = config.urls.reduce((prev, curr) => {
     if (typeof curr === "string") {
       prev[curr] = standartOptions;
     } else if (curr.url) {
@@ -73,24 +79,17 @@ const prepareUrls = config => {
     }
     return prev;
   }, {});
-};
-
-const getUrlOptions = (config, url) => config.urls[url];
-
-const validateConfig = config => {
-  if (!config.task) {
-    config.task = +new Date();
-  }
 
   return config;
 };
+
+const getUrlOptions = (config, url) => config.urls[url];
 
 module.exports = {
   handleError,
   //saveAsFile,
   //saveOnWeb,
   //getConfigFile,
-  prepareUrls,
-  getUrlOptions,
-  validateConfig
+  prepareConfig,
+  getUrlOptions
 };
