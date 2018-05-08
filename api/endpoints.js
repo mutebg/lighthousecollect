@@ -5,19 +5,22 @@ const _ = require("lodash");
 const lighthouse = require("../core/lighthouse");
 const utils = require("../core/utils");
 const transforms = require("./transforms");
+const validator = require("../core/validator");
 
 router.post("/do", (req, res) => {
-  let config = req.body;
-  config.urls = utils.prepareUrls(config);
-  config = utils.validateConfig(config);
-  //return res.json(config);
-  //is global object so anyone can access the config trought files
-  globalConfig = config;
+  try {
+    let config = req.body;
+    const isValid = validator.validateConfig(config);
+    if (isValid !== true) {
+      throw isValid;
+    }
+    config = utils.prepareConfig(config);
+    //return res.json(config);
+    //is global object so anyone can access the config trought files
+    globalConfig = config;
 
-  //run lighthouse
-  lighthouse
-    .run(config)
-    .then(rawData => {
+    //run lighthouse
+    lighthouse.run(config).then(rawData => {
       const created = rawData.map(rawDataItem => {
         rawDataItem.project = config.project;
         rawDataItem.task = config.task;
@@ -31,8 +34,13 @@ router.post("/do", (req, res) => {
         }));
         res.json(shortData);
       });
-    })
-    .catch(console.log);
+    });
+    //.catch(e);
+  } catch (e) {
+    res.json({
+      error: e
+    });
+  }
 });
 
 router.get("/projects", (req, res) => {
