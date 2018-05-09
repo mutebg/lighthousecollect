@@ -5,6 +5,7 @@
 * Production version
 * Update Lighthouse
 * limits ( per category and per audit )
+* Return 400 error when pass the limit
 
 # FEATURES
 
@@ -18,3 +19,34 @@
 * Full config specification in doc
 * cURL example
 * Deploy demo
+
+### Example config
+
+```
+{
+  "project": "blaaaa",
+  "urls": [
+    {
+      "url": "https://brandpuntplus.kro-ncrv.nl/brandpuntplus/schuldenkind-jeroen/",
+      "options": {
+        "lookup": ["homo"]
+      }
+    }
+  ],
+  "options": {
+    "lookup": [
+      "https://twitter.com/Brandpunt_plus",
+      "https://www.facebook.com/brandpuntplus/"
+    ],
+		"limits": {
+			"categories": [
+				{"name": "SEO", "value": 80},
+				{"name": "Performance", "value": 80}
+			],
+			"audits": [
+				{"name": "viewport", "value": 30}
+			]
+	}
+	}
+}
+```

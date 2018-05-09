@@ -8,7 +8,8 @@ const optionsSchema = {
     lookup: {
       type: "array",
       items: { type: "string" }
-    }
+    },
+    limits: { $ref: "/Limit" }
   }
 };
 
@@ -18,6 +19,30 @@ const urlSchema = {
   properties: {
     url: { type: "string" },
     options: { $ref: "/Options" }
+  }
+};
+
+const limitItemSchema = {
+  id: "/LimitItem",
+  type: "object",
+  properties: {
+    name: { type: "string" },
+    value: { type: "number" }
+  }
+};
+
+const limitSchema = {
+  id: "/Limit",
+  type: "object",
+  properties: {
+    categories: {
+      type: "array",
+      items: { $ref: "/LimitItem" }
+    },
+    audit: {
+      type: "array",
+      items: { $ref: "/LimitItem" }
+    }
   }
 };
 
@@ -37,6 +62,8 @@ const mainSchema = {
 
 v.addSchema(optionsSchema, "/Options");
 v.addSchema(urlSchema, "/URL");
+v.addSchema(limitItemSchema, "/LimitItem");
+v.addSchema(limitSchema, "/Limit");
 v.addSchema(mainSchema, "/Main");
 
 const validateConfig = config => {

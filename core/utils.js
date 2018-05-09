@@ -46,7 +46,36 @@ const prepareConfig = config => {
 
 const getUrlOptions = (config, url) => config.urls[url];
 
+const checkLimits = ({ categories, audits }, json) => {
+  const errors = [];
+  const arrayToSet = (prev, curr) => {
+    prev[curr.name] = curr.value;
+    return prev;
+  };
+  const categoriesSet = categories.reduce(arrayToSet, {});
+  const auditsSet = audits.reduce(arrayToSet, {});
+
+  json.reportCategories.forEach(({ name, score, audits }) => {
+    // compare score on category level
+    const scoreCategory = categoriesSet[name];
+    if (scoreCategory !== "undefined" && scoreCategory <= score) {
+      errors.push(`${name} score ${score} of ${scoreCategory} goal`);
+    }
+
+    //compare score on audit level
+    audits.forEach(({ id, score }) => {
+      const scoreAudit = auditsSet[id];
+      if (scoreAudit !== "undefined" && scoreAudit <= score) {
+        errors.push(`${id} score ${score} of ${scoreAudit} goal`);
+      }
+    });
+  });
+
+  return errors;
+};
+
 module.exports = {
   prepareConfig,
-  getUrlOptions
+  getUrlOptions,
+  checkLimits
 };
