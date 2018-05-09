@@ -2,12 +2,14 @@
 
 * API: slow
 * Run in docker: in progress, need more testing
-* Validate config
 * Production version
+* Update Lighthouse
+* limits ( per category and per audit )
 
 # FEATURES
 
-* Graphs
+* Graphs/Charts - https://github.com/terezka/line-charts
+* Alerts
 * CLI
 
 ## DOCUMENTATION
