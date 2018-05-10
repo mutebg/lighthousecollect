@@ -10,13 +10,12 @@
 # FEATURES
 
 * Graphs/Charts - https://github.com/terezka/line-charts
-* Alerts
+* Notifications - send a email on event
 * CLI
 
 ## DOCUMENTATION
 
-* Readme
-* Full config specification in doc
+* Describe config, maybe use JSONSchema for that
 * cURL example
 * Deploy demo
 

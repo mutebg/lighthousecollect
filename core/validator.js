@@ -9,7 +9,12 @@ const optionsSchema = {
       type: "array",
       items: { type: "string" }
     },
-    limits: { $ref: "/Limit" }
+    notifications: {
+      type: { $ref: "/Notifications" }
+    },
+    goals: {
+      $ref: "/Limit"
+    }
   }
 };
 
@@ -22,8 +27,8 @@ const urlSchema = {
   }
 };
 
-const limitItemSchema = {
-  id: "/LimitItem",
+const goalItemSchema = {
+  id: "/GoalItem",
   type: "object",
   properties: {
     name: { type: "string" },
@@ -31,18 +36,30 @@ const limitItemSchema = {
   }
 };
 
-const limitSchema = {
-  id: "/Limit",
+const goalSchema = {
+  id: "/Goal",
   type: "object",
   properties: {
     categories: {
       type: "array",
-      items: { $ref: "/LimitItem" }
+      items: { $ref: "/GoalItem" }
     },
     audit: {
       type: "array",
-      items: { $ref: "/LimitItem" }
+      items: { $ref: "/GoalItem" }
     }
+  }
+};
+
+const notificationsSchema = {
+  id: "/Notifications",
+  type: "object",
+  properties: {
+    when: {
+      type: "string",
+      enum: ["always", "never", "success", "fail"]
+    },
+    email: { type: "string" }
   }
 };
 
@@ -62,8 +79,9 @@ const mainSchema = {
 
 v.addSchema(optionsSchema, "/Options");
 v.addSchema(urlSchema, "/URL");
-v.addSchema(limitItemSchema, "/LimitItem");
-v.addSchema(limitSchema, "/Limit");
+v.addSchema(goalItemSchema, "/GoalItem");
+v.addSchema(goalSchema, "/Goal");
+v.addSchema(notificationsSchema, "/Notifications");
 v.addSchema(mainSchema, "/Main");
 
 const validateConfig = config => {
