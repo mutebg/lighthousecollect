@@ -18,7 +18,9 @@ const report = mongoose.model(
     score: { type: Number },
     reportCategories: Schema.Types.Mixed,
     reportGroups: Schema.Types.Mixed,
-    timing: Schema.Types.Mixed
+    timing: Schema.Types.Mixed,
+    options: Schema.Types.Mixed,
+    goalErrors: [String]
   })
 );
 

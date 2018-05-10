@@ -3,9 +3,11 @@
 * API: slow
 * Run in docker: in progress, need more testing
 * Production version
-* Update Lighthouse
+* Update Lighthouse to v3
+* Save URL config together with audit JSON
 * limits ( per category and per audit )
 * Return 400 error when pass the limit
+* Add FlowType
 
 # FEATURES
 

@@ -46,7 +46,10 @@ const prepareConfig = config => {
 
 const getUrlOptions = (config, url) => config.urls[url];
 
-const checkLimits = ({ categories, audits }, json) => {
+const checkGoals = ({ categories, audits }, json) => {
+  if (!categories && !audits) {
+    return [];
+  }
   const errors = [];
   const arrayToSet = (prev, curr) => {
     prev[curr.name] = curr.value;
@@ -57,16 +60,16 @@ const checkLimits = ({ categories, audits }, json) => {
 
   json.reportCategories.forEach(({ name, score, audits }) => {
     // compare score on category level
-    const scoreCategory = categoriesSet[name];
-    if (scoreCategory !== "undefined" && scoreCategory <= score) {
-      errors.push(`${name} score ${score} of ${scoreCategory} goal`);
+    const goalScore = categoriesSet[name];
+    if (goalScore !== "undefined" && score < goalScore) {
+      errors.push(`${name} score ${score} of ${goalScore} goal`);
     }
 
     //compare score on audit level
     audits.forEach(({ id, score }) => {
-      const scoreAudit = auditsSet[id];
-      if (scoreAudit !== "undefined" && scoreAudit <= score) {
-        errors.push(`${id} score ${score} of ${scoreAudit} goal`);
+      const goalScore = auditsSet[id];
+      if (goalScore !== "undefined" && score < goalScore) {
+        errors.push(`${id} score ${score} of ${goalScore} goal`);
       }
     });
   });
@@ -74,8 +77,13 @@ const checkLimits = ({ categories, audits }, json) => {
   return errors;
 };
 
+const sendNotification = (config, results) => {
+  console.log("TODO");
+};
+
 module.exports = {
   prepareConfig,
   getUrlOptions,
-  checkLimits
+  checkGoals,
+  sendNotification
 };

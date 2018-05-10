@@ -13,7 +13,7 @@ const optionsSchema = {
       type: { $ref: "/Notifications" }
     },
     goals: {
-      $ref: "/Limit"
+      $ref: "/Goal"
     }
   }
 };

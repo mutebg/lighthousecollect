@@ -24,14 +24,22 @@ router.post("/do", (req, res) => {
       const created = rawData.map(rawDataItem => {
         rawDataItem.project = config.project;
         rawDataItem.task = config.task;
+        //save url options part of audit
+        const options = utils.getUrlOptions(config, rawDataItem.url);
+        rawDataItem.options = options;
+        const goalErrors = utils.checkGoals(options.goal, rawDataItem);
+        rawDataItem.goalErrors = goalErrors;
         return report.create(rawDataItem);
       });
       return Promise.all(created).then(data => {
-        const shortData = data.map(({ _id, task, url }) => ({
+        const shortData = data.map(({ _id, task, url, goalErrors }) => ({
           _id,
           task,
           url
         }));
+
+        utils.sendNotification(config, shortData);
+
         res.json(shortData);
       });
     });
