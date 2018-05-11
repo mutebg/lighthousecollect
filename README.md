@@ -1,4 +1,4 @@
-# Lighthouse Collect
+# Lighthouse Collect ( WIP )
 
 Run Google Lighthouse as a web service, collect audits, set goals and receive notifications.
 
@@ -70,3 +70,5 @@ Example payload ( needs application/json header )
 * lookup: search for strings inside html
 * goal: set your target goals, per category and/or per audit
 * notifications: send email notification
+  * when: one of always, never, fail, success
+  * email: email address

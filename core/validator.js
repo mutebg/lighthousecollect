@@ -86,7 +86,6 @@ v.addSchema(mainSchema, "/Main");
 
 const validateConfig = config => {
   const result = v.validate(config, mainSchema);
-  console.log(result.errors);
   if (result.errors.length > 0) {
     return result.errors;
   }

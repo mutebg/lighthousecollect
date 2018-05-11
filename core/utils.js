@@ -9,10 +9,6 @@ const cloneDeep = require("lodash/cloneDeep");
 const validator = require("./validator");
 
 const prepareConfig = config => {
-  if (!config.task) {
-    config.task = +new Date();
-  }
-
   // prepare urls
   const standartOptions = config.options;
   const mergeCustomizer = (objValue, srcValue) => {
@@ -41,6 +37,17 @@ const prepareConfig = config => {
     return prev;
   }, {});
 
+  if (!config.task) {
+    config.task = +new Date();
+  }
+
+  if (!config.options.notifications) {
+    config.options.notifications = {
+      when: "never",
+      email: null
+    };
+  }
+
   return config;
 };
 
@@ -62,14 +69,14 @@ const checkGoals = ({ categories, audits }, json) => {
     // compare score on category level
     const goalScore = categoriesSet[name];
     if (goalScore !== "undefined" && score < goalScore) {
-      errors.push(`${name} score ${score} of ${goalScore} goal`);
+      errors.push(`${json.url} : ${name} score ${score} of ${goalScore} goal`);
     }
 
     //compare score on audit level
     audits.forEach(({ id, score }) => {
       const goalScore = auditsSet[id];
       if (goalScore !== "undefined" && score < goalScore) {
-        errors.push(`${id} score ${score} of ${goalScore} goal`);
+        errors.push(`${json.url} : ${id} score ${score} of ${goalScore} goal`);
       }
     });
   });
@@ -77,8 +84,11 @@ const checkGoals = ({ categories, audits }, json) => {
   return errors;
 };
 
-const sendNotification = (config, results) => {
-  console.log("TODO");
+const sendNotification = (config, errors) => {
+  const { when, email } = config.options.notifications;
+  if (when !== "never" && email) {
+    console.log("TODO: send notifications to " + email);
+  }
 };
 
 module.exports = {

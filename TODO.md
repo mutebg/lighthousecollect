@@ -1,19 +1,16 @@
-# IMPROVEMENTS
+# IMPORTANT
 
 * API: slow
 * Run in docker: in progress, need more testing
 * Production version
-* Update Lighthouse to v3
-* Save URL config together with audit JSON
-* limits ( per category and per audit )
-* Return 400 error when pass the limit
-* Add FlowType
+* Notifications - send a email
 
-# FEATURES
+# NICE TO HAVE
 
 * Graphs/Charts - https://github.com/terezka/line-charts
-* Notifications - send a email on event
 * CLI
+* Update Lighthouse to v3
+* Add FlowType/TypeScript
 
 ## DOCUMENTATION
 

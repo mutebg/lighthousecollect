@@ -35,11 +35,21 @@ router.post("/do", (req, res) => {
         const shortData = data.map(({ _id, task, url, goalErrors }) => ({
           _id,
           task,
-          url
+          url,
+          goalErrors
         }));
+        // collect all errors
+        const allErrors = shortData.reduce(
+          (prev, curr) => [...prev, ...curr.goalErrors],
+          []
+        );
 
-        utils.sendNotification(config, shortData);
+        utils.sendNotification(config, allErrors);
 
+        //send different status code when do not pass the goal
+        const statusCode = allErrors.length > 0 ? 400 : 200;
+        console.log({ statusCode, allErrors });
+        res.status(statusCode);
         res.json(shortData);
       });
     });
