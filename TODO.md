@@ -4,6 +4,7 @@
 * Run in docker: in progress, need more testing
 * Production version
 * Notifications - send a email
+* Switch to preact
 
 # NICE TO HAVE
 

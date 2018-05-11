@@ -20,7 +20,8 @@ const report = mongoose.model(
     reportGroups: Schema.Types.Mixed,
     timing: Schema.Types.Mixed,
     options: Schema.Types.Mixed,
-    goalErrors: [String]
+    goalErrors: [String],
+    overview: Schema.Types.Mixed
   })
 );
 
@@ -29,6 +30,7 @@ const getProjects = () => report.find().distinct("project");
 const getList = filter =>
   report
     .find(filter)
+    .select("id project task url generatedTime score overview")
     .sort({ generatedTime: "desc" })
     .exec();
 

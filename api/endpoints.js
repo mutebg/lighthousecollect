@@ -29,7 +29,9 @@ router.post("/do", (req, res) => {
         rawDataItem.options = options;
         const goalErrors = utils.checkGoals(options.goal, rawDataItem);
         rawDataItem.goalErrors = goalErrors;
+        rawDataItem.overview = transforms.overview(rawDataItem);
         return report.create(rawDataItem);
+        //return Promise.resolve(rawDataItem);
       });
       return Promise.all(created).then(data => {
         const shortData = data.map(({ _id, task, url, goalErrors }) => ({
@@ -105,7 +107,7 @@ router.get("/list/", (req, res) => {
       const short = {
         id: current._id,
         url: current.url,
-        data: transforms.overview(current),
+        data: current.overview,
         total: Math.round(current.score)
       };
 
