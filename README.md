@@ -1,6 +1,6 @@
 # Lighthouse Collect ( WIP )
 
-Run Google Lighthouse as a web service, collect audits, set goals and receive notifications.
+Run Google Lighthouse as a web service, collect audits, create charts, set goals and receive notifications.
 
 ## Getting Started
 

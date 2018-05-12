@@ -21,7 +21,6 @@ WORKDIR /app
 
 COPY . /app
 RUN npm install
-RUN ./node_modules/.bin/elm package install
 
 # Disable Lighthouse error reporting to prevent prompt.
 ENV CI=true

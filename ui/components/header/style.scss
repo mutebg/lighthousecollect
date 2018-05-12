@@ -2,4 +2,10 @@
   height: 60px;
   margin-bottom: 30px;
   background: var(--primary);
+  color: #fff;
+  padding: 20px;
+
+  a {
+    color: inherit;
+  }
 }

@@ -30,18 +30,26 @@ export default class List extends Component {
 
   constructor(props) {
     super(props);
-    const filter = getFIlter(this.props);
+    this.loadData(props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.loadData(nextProps);
+  }
+
+  loadData = props => {
+    const filter = getFIlter(props);
     getList(filter).then(list => {
       this.setState({ list });
     });
-  }
+  };
 
   render(props, { list }) {
     const filter = getFIlter(props);
 
     const renerTask = ({ task, generatedTime, urls }) => {
       const result = [
-        <tr>
+        <tr class="table-secondary">
           <td colSpan="2">{task}</td>
           <td>{generatedTime}</td>
         </tr>
@@ -73,7 +81,6 @@ export default class List extends Component {
 
     return (
       <div>
-        <h1>Filter</h1>
         <Filter {...filter} />
         <h1>List</h1>
         <table class="table result-table">{list.map(renerTask)}</table>

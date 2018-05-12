@@ -1,14 +1,11 @@
 # IMPORTANT
 
-* API: slow
 * Run in docker: in progress, need more testing
 * Production version
-* Notifications - send a email
-* Switch to preact
+* Notifications - send email, configuration for mail server and when and what to send
 
 # NICE TO HAVE
 
-* Graphs/Charts - https://github.com/terezka/line-charts
 * CLI
 * Update Lighthouse to v3
 * Add FlowType/TypeScript
@@ -37,7 +34,7 @@
       "https://twitter.com/Brandpunt_plus",
       "https://www.facebook.com/brandpuntplus/"
     ],
-		"limits": {
+		"goals": {
 			"categories": [
 				{"name": "SEO", "value": 80},
 				{"name": "Performance", "value": 80}

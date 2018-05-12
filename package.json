@@ -4,10 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
-    "ui:start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
-    "ui:build": "preact build --no-prerender --template ui/assets/template.html --src=ui",
+    "start":
+      "node app.js & preact build --no-prerender --template ui/assets/template.html --src=ui",
+    "dev":
+      "nodemon app.js & preact watch --template ui/assets/template.html --src=ui",
+    "ui:start":
+      "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
+    "ui:build":
+      "preact build --no-prerender --template ui/assets/template.html --src=ui",
     "ui:dev": "preact watch --template ui/assets/template.html --src=ui"
   },
   "author": "Stoyan Delev i@stoyandelev.com",
@@ -17,6 +21,7 @@
     "chrome-launcher": "^0.10.2",
     "commander": "^2.15.1",
     "cors": "^2.8.4",
+    "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "html-validator": "^2.2.3",
     "jsonschema": "^1.2.4",
