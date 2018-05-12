@@ -7,6 +7,32 @@ const utils = require("../core/utils");
 const transforms = require("./transforms");
 const validator = require("../core/validator");
 
+const getFilter = req => {
+  const extraFilters = ["project", "url", "task"];
+  const filter = extraFilters.reduce((prev, next) => {
+    if (req.query[next]) {
+      prev[next] = req.query[next];
+    }
+    return prev;
+  }, {});
+
+  // date filter
+  const { dateFrom, dateTo } = req.query;
+  const datetimeFrom = dateFrom
+    ? new Date(Date.parse(dateFrom + " 00:00:00"))
+    : null;
+  const datetimeTo = dateTo ? new Date(Date.parse(dateTo + " 23:59:59")) : null;
+  if (datetimeFrom && datetimeTo) {
+    filter["generatedTime"] = { $gt: datetimeFrom, $lt: datetimeTo };
+  } else if (datetimeFrom) {
+    filter["generatedTime"] = { $gt: datetimeFrom };
+  } else if (datetimeTo) {
+    filter["generatedTime"] = { $lt: datetimeTo };
+  }
+
+  return filter;
+};
+
 router.post("/do", (req, res) => {
   try {
     let config = req.body;
@@ -68,28 +94,7 @@ router.get("/projects", (req, res) => {
 });
 
 router.get("/list/", (req, res) => {
-  const extraFilters = ["project", "url", "task"];
-  const filter = extraFilters.reduce((prev, next) => {
-    if (req.query[next]) {
-      prev[next] = req.query[next];
-    }
-    return prev;
-  }, {});
-
-  // date filter
-  const { dateFrom, dateTo } = req.query;
-  const datetimeFrom = dateFrom
-    ? new Date(Date.parse(dateFrom + " 00:00:00"))
-    : null;
-  const datetimeTo = dateTo ? new Date(Date.parse(dateTo + " 23:59:59")) : null;
-  if (datetimeFrom && datetimeTo) {
-    filter["generatedTime"] = { $gt: datetimeFrom, $lt: datetimeTo };
-  } else if (datetimeFrom) {
-    filter["generatedTime"] = { $gt: datetimeFrom };
-  } else if (datetimeTo) {
-    filter["generatedTime"] = { $lt: datetimeTo };
-  }
-
+  const filter = getFilter(req);
   return report.getList(filter).then(data => {
     const map = {};
     const groupedByTask = data.reduce((prev, current) => {
@@ -128,6 +133,13 @@ router.get("/view/:id/html", (req, res) => {
   return report.getById(req.params.id).then(json => {
     const html = new ReportGenerator().generateReportHtml(json);
     res.send(html);
+  });
+});
+
+router.get("/chart/", (req, res) => {
+  const filter = getFilter(req);
+  return report.getList(filter).then(data => {
+    res.json(data);
   });
 });
 
