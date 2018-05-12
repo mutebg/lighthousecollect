@@ -1,6 +1,7 @@
 import { h, Component } from "preact";
 import "./style";
 import { getChart } from "../../utils/api";
+import LineChart from "./linechart";
 
 export default class Chart extends Component {
   state = {
@@ -18,10 +19,9 @@ export default class Chart extends Component {
   render({ project, url }, { data }) {
     return (
       <div>
-        <h1>
-          Chart for {project} - {decodeURIComponent(url)}
-        </h1>
-        {JSON.stringify(data)}
+        <h1>Chart for project: {project}</h1>
+        <h3>{decodeURIComponent(url)}</h3>
+        <LineChart data={data} />
       </div>
     );
   }

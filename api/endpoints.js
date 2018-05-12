@@ -76,7 +76,6 @@ router.post("/do", (req, res) => {
 
         //send different status code when do not pass the goal
         const statusCode = allErrors.length > 0 ? 400 : 200;
-        console.log({ statusCode, allErrors });
         res.status(statusCode);
         res.json(shortData);
       });
