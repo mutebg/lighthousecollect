@@ -23,13 +23,14 @@
     "lighthouse": "^2.9.4",
     "lodash": "^4.17.5",
     "mongoose": "^5.0.12",
-    "request": "^2.85.0",
-    "request-promise-native": "^1.0.5",
-    "web-auto-extractor": "^1.0.17",
     "preact": "^8.2.6",
     "preact-compat": "^3.17.0",
     "preact-head": "^1.0.2",
-    "preact-router": "^2.5.7"
+    "preact-router": "^2.5.7",
+    "precharts": "^1.4.0",
+    "request": "^2.85.0",
+    "request-promise-native": "^1.0.5",
+    "web-auto-extractor": "^1.0.17"
   },
   "devDependencies": {
     "dotenv-webpack": "^1.5.5",
