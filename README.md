@@ -10,16 +10,29 @@ There is docker image, so everything runs inside docker container. The only requ
 
 ### Run project
 
-Run the project for development
+There are 3 environment files (.env.dev .env.local .env.prod )
+You need to configure them.
+
+#### Running without docker
+
+You will need local mongodb for that
 
 ```
-docker-compose up --build
+./start.sh local
 ```
 
-Run the project for production
+#### Running docker in dev mode
+
+With hot-reloading and nodemon
 
 ```
-docker-compose up --file docker-compose.yml --build
+./start.sh dev
+```
+
+#### Running docker in dev mode
+
+```
+./start.sh prod
 ```
 
 ## How To

@@ -11,3 +11,5 @@ Dockerfile*
 README.md
 report.*
 docker_*.sh
+.env
+.env*

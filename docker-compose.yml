@@ -19,3 +19,4 @@ services:
       - /app/node_modules
     depends_on:
       - db
+    env_file: .env

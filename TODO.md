@@ -1,7 +1,5 @@
 # IMPORTANT
 
-* Run in docker
-* Production version
 * Notifications - send email, configuration for mail server and when and what to send https://nodemailer.com/about/
 
 # NICE TO HAVE
