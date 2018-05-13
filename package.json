@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start":
-      "node app.js & preact build --no-prerender --template ui/assets/template.html --src=ui",
+      "preact build --no-prerender --template ui/assets/template.html --src=ui & node app.js",
     "dev":
       "nodemon app.js & preact watch --template ui/assets/template.html --src=ui",
     "ui:start":

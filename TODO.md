@@ -1,8 +1,8 @@
 # IMPORTANT
 
-* Run in docker: in progress, need more testing
+* Run in docker
 * Production version
-* Notifications - send email, configuration for mail server and when and what to send
+* Notifications - send email, configuration for mail server and when and what to send https://nodemailer.com/about/
 
 # NICE TO HAVE
 
@@ -15,6 +15,7 @@
 * Describe config, maybe use JSONSchema for that
 * cURL example
 * Deploy demo
+* Deploy script
 
 ### Example config
 

@@ -16,7 +16,8 @@ const db = process.env.MONGODB;
 //const db = "mongodb://db/app";
 mongoose.connect(db);
 
-app.get("/", (req, res) => {
+const fePages = ["/", "/list", "/view/:id", "/chart"];
+app.get(fePages, (req, res) => {
   res.sendFile("index.html", {
     root: path.join(__dirname + "/../build/")
   });

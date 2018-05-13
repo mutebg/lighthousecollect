@@ -2,6 +2,7 @@ import { h, Component } from "preact";
 import "./style";
 import { getChart } from "../../utils/api";
 import LineChart from "./linechart";
+import { getFIlter } from "../../utils/url";
 
 export default class Chart extends Component {
   state = {
@@ -10,17 +11,17 @@ export default class Chart extends Component {
 
   constructor(props) {
     super(props);
-    const { project, url } = props;
-    getChart({ project, url }).then(data => {
+    const filter = getFIlter(props);
+    getChart(filter).then(data => {
       this.setState({ data });
     });
   }
 
-  render({ project, url }, { data }) {
+  render({ project, uri }, { data }) {
     return (
       <div>
         <h1>Chart for project: {project}</h1>
-        <h3>{decodeURIComponent(url)}</h3>
+        <h3>{decodeURIComponent(uri)}</h3>
         <LineChart data={data} />
       </div>
     );

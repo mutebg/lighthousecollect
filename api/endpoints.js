@@ -8,10 +8,12 @@ const transforms = require("./transforms");
 const validator = require("../core/validator");
 
 const getFilter = req => {
-  const extraFilters = ["project", "url", "task"];
+  const extraFilters = ["project", "uri", "task"];
+  const remaped = { uri: "url" };
   const filter = extraFilters.reduce((prev, next) => {
     if (req.query[next]) {
-      prev[next] = req.query[next];
+      const key = remaped[next] ? remaped[next] : next;
+      prev[key] = req.query[next];
     }
     return prev;
   }, {});

@@ -28,12 +28,13 @@ body {
 
   td:first-child {
     border-radius: 10px 0 0 0;
-    padding-left: 0.2em;
+    padding-left: 1em;
   }
 
   td:last-child {
     border-radius: 0 10px 0 0;
-    padding-right: 0.2em;
+    padding-right: 1em;
+    text-align: right;
   }
 }
 

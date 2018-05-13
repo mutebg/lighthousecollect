@@ -1,2 +1,12 @@
-.projects {
+.chart {
+}
+
+.Chart {
+  &__filter {
+    margin-top: 1em;
+    button {
+      margin-right: 0.2em;
+      font-size: 0.9rem;
+    }
+  }
 }

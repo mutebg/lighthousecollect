@@ -2,14 +2,7 @@ import { h, Component } from "preact";
 import Filter from "./filter";
 import "./style";
 import { getList } from "../../utils/api";
-
-const getFIlter = props =>
-  ["project", "task", "uri", "dateFrom", "dateTo"].reduce((prev, next) => {
-    if (props[next]) {
-      prev[next] = props[next];
-    }
-    return prev;
-  }, {});
+import { getFIlter } from "../../utils/url";
 
 const reportStatus = value => {
   if (value > 75) return "pass";
@@ -64,7 +57,9 @@ export default class List extends Component {
               View report
             </a>
             <a
-              href={`/chart/${props.project}/${encodeURIComponent(url)}`}
+              href={`/chart/?uri=${encodeURIComponent(url)}&project=${
+                props.project
+              }`}
               class="button button-outline"
             >
               View Chart

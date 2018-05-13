@@ -27,7 +27,7 @@ export default class App extends Component {
             <Projects path="/" />
             <List path="/list/" />
             <View path="/view/:id" />
-            <Chart path="/chart/:project/:url" />
+            <Chart path="/chart/" />
           </Router>
         </main>
         <Footer />
