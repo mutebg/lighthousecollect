@@ -3,6 +3,7 @@ import Filter from "./filter";
 import "./style";
 import { getList } from "../../utils/api";
 import { getFIlter } from "../../utils/url";
+import { format as dateFormat } from "../../utils/date";
 
 const reportStatus = value => {
   if (value > 75) return "pass";
@@ -40,17 +41,17 @@ export default class List extends Component {
   render(props, { list }) {
     const filter = getFIlter(props);
 
-    const renerTask = ({ task, generatedTime, urls }) => {
+    const renderTask = ({ task, generatedTime, urls }) => {
       const result = [
         <tr class="table-secondary">
           <td colSpan="2">{task}</td>
-          <td>{generatedTime}</td>
+          <td>{dateFormat(generatedTime)}</td>
         </tr>
       ];
 
       const urlsTrs = urls.map(({ id, url, total, data }) => [
-        <tr>
-          <td>{url}</td>
+        <tr class="top-item">
+          <td width="60%">{url}</td>
           <td>{createPill({ label: "Total", value: total })}</td>
           <td>
             <a href={`/view/${id}`} class="button button-outline">
@@ -66,7 +67,7 @@ export default class List extends Component {
             </a>
           </td>
         </tr>,
-        <tr>
+        <tr class="bottom-item">
           <td colSpan="3">{data.map(createPill)}</td>
         </tr>
       ]);
@@ -77,8 +78,7 @@ export default class List extends Component {
     return (
       <div>
         <Filter {...filter} />
-        <h1>List</h1>
-        <table class="table result-table">{list.map(renerTask)}</table>
+        <table class="table result-table">{list.map(renderTask)}</table>
       </div>
     );
   }

@@ -59,7 +59,6 @@ router.post("/do", (req, res) => {
         rawDataItem.goalErrors = goalErrors;
         rawDataItem.overview = transforms.overview(rawDataItem);
         return report.create(rawDataItem);
-        //return Promise.resolve(rawDataItem);
       });
       return Promise.all(created).then(data => {
         const shortData = data.map(({ _id, task, url, goalErrors }) => ({

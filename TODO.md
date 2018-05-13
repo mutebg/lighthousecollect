@@ -1,5 +1,6 @@
 # IMPORTANT
 
+* Relunch task/url
 * Notifications - send email, configuration for mail server and when and what to send https://nodemailer.com/about/
 
 # NICE TO HAVE
@@ -19,29 +20,30 @@
 
 ```
 {
-  "project": "blaaaa",
+  "project": "skysport",
   "urls": [
     {
-      "url": "https://brandpuntplus.kro-ncrv.nl/brandpuntplus/schuldenkind-jeroen/",
-      "options": {
-        "lookup": ["homo"]
-      }
-    }
+      "url": "http://www.skysports.com/football/news"
+    }, {
+			"url": "http://www.skysports.com/"
+		}, {
+			"url": "http://www.skysports.com/football/news/11095/11370379/european-paper-talk-barcelona-to-offer-836415m-more-for-antoine-griezmann"
+		}
   ],
   "options": {
     "lookup": [
-      "https://twitter.com/Brandpunt_plus",
-      "https://www.facebook.com/brandpuntplus/"
+      "https://twitter.com/SkySports",
+      "https://www.facebook.com/SkySports"
     ],
-		"goals": {
+		"goal": {
 			"categories": [
-				{"name": "SEO", "value": 80},
-				{"name": "Performance", "value": 80}
+				{"name": "Progressive Web App", "value": 30},
+				{"name": "Performance", "value": 30}
 			],
 			"audits": [
-				{"name": "viewport", "value": 30}
+				{"name": "first-interactive", "value": 20}
 			]
-	}
+		}
 	}
 }
 ```

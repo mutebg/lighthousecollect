@@ -21,6 +21,14 @@ body {
   border: 0;
 }
 
+td {
+  word-wrap: break-word;
+}
+
+.top-item td {
+  border-bottom: 0;
+}
+
 .table-secondary {
   background: var(--primary-ultra-light);
   color: var(--primary);

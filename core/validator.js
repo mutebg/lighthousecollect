@@ -24,7 +24,8 @@ const urlSchema = {
   properties: {
     url: { type: "string" },
     options: { $ref: "/Options" }
-  }
+  },
+  required: ["url"]
 };
 
 const goalItemSchema = {
@@ -67,14 +68,22 @@ const mainSchema = {
   id: "/Main",
   type: "object",
   properties: {
-    task: { type: "string" },
-    project: { type: "string" },
+    task: {
+      type: "string",
+      description: "Uniq identifier, usealy git commit or timestamp"
+    },
+    project: {
+      type: "string",
+      description: "Project identifier, tasks are grouped by project"
+    },
     urls: {
       type: "array",
-      items: { $ref: "/URL" }
+      items: { $ref: "/URL" },
+      description: "List of URLs"
     },
     options: { $ref: "/Options" }
-  }
+  },
+  required: ["urls", "project"]
 };
 
 v.addSchema(optionsSchema, "/Options");

@@ -38,6 +38,8 @@ const run = ({ urls }) =>
           try {
             const result = await fn();
             delete result.artifacts;
+            delete result.audits;
+            //delete result.reportGroups;
             completeTasks.push(result);
           } catch (err) {
             console.log(err);

@@ -9,6 +9,7 @@ import {
   CartesianGrid,
   Tooltip
 } from "precharts";
+import { format as dateFormat } from "../../utils/date";
 
 const colros = [
   "red",
@@ -46,7 +47,7 @@ export default class LineChart extends Component {
   render({ data }, { hidden }) {
     const chartData = data.map(item => {
       let row = {
-        datetime: item.generatedTime
+        datetime: dateFormat(item.generatedTime)
       };
 
       row = item.overview.reduce((prev, next) => {
