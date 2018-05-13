@@ -2,6 +2,9 @@
 
 Run Google Lighthouse as a web service, collect audits, create charts, set goals and receive notifications.
 
+<img src="https://raw.githubusercontent.com/mutebg/lighthousecollect/master/docs/list.png" width="350" />
+<img src="https://raw.githubusercontent.com/mutebg/lighthousecollect/master/docs/chart.png" width="350" />
+
 ## Getting Started
 
 ### Requirements
