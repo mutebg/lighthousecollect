@@ -6,6 +6,7 @@ const lighthouse = require("../core/lighthouse");
 const utils = require("../core/utils");
 const transforms = require("./transforms");
 const validator = require("../core/validator");
+const request = require("request-promise-native");
 
 const getFilter = req => {
   const extraFilters = ["project", "uri", "task"];
@@ -38,12 +39,14 @@ const getFilter = req => {
 router.post("/do", (req, res) => {
   try {
     let config = req.body;
+
     const isValid = validator.validateConfig(config);
     if (isValid !== true) {
       throw isValid;
     }
+
     config = utils.prepareConfig(config);
-    //return res.json(config);
+
     //is global object so anyone can access the config trought files
     globalConfig = config;
 
@@ -89,13 +92,19 @@ router.post("/do", (req, res) => {
   }
 });
 
-router.get("/projects", (req, res) => {
-  return report.getProjects().then(data => res.json(data));
+router.get("/projects", async (req, res) => {
+  try {
+    const data = await report.getProjects();
+    return res.json(data);
+  } catch (e) {
+    return res.status(500).json(e);
+  }
 });
 
-router.get("/list/", (req, res) => {
-  const filter = getFilter(req);
-  return report.getList(filter).then(data => {
+router.get("/list/", async (req, res) => {
+  try {
+    const filter = getFilter(req);
+    const data = await report.getList(filter);
     const map = {};
     const groupedByTask = data.reduce((prev, current) => {
       let index = map[current.task];
@@ -121,26 +130,74 @@ router.get("/list/", (req, res) => {
       return prev;
     }, []);
 
-    res.json(groupedByTask);
-  });
+    return res.json(groupedByTask);
+  } catch (e) {
+    return res.status(500).json(e);
+  }
 });
 
-router.get("/view/:id/json", (req, res) => {
-  return report.getById(req.params.id).then(data => res.json(data));
-});
-router.get("/view/:id/html", (req, res) => {
-  const ReportGenerator = require("../node_modules/lighthouse/lighthouse-core/report/v2/report-generator");
-  return report.getById(req.params.id).then(json => {
+router.get("/view/:id/html", async (req, res) => {
+  try {
+    const ReportGenerator = require("../node_modules/lighthouse/lighthouse-core/report/v2/report-generator");
+    const json = await report.getById(req.params.id);
     const html = new ReportGenerator().generateReportHtml(json);
-    res.send(html);
-  });
+    return res.send(html);
+  } catch (e) {
+    return res.status(500).json(e);
+  }
 });
 
-router.get("/chart/", (req, res) => {
-  const filter = getFilter(req);
-  return report.getList(filter).then(data => {
-    res.json(data);
-  });
+router.get("/chart/", async (req, res) => {
+  try {
+    const filter = getFilter(req);
+    const data = await report.getList(filter);
+    return res.json(data);
+  } catch (e) {
+    return res.status(500).json(e);
+  }
+});
+
+router.get("/re/", async (req, res) => {
+  try {
+    const extraFilters = ["_id", "project", "task"];
+    const filter = extraFilters.reduce((prev, next) => {
+      if (req.query[next]) {
+        prev[next] = req.query[next];
+      }
+      return prev;
+    }, {});
+    const list = await report.getList(filter, "id url project options");
+    if (list.length === 0) {
+      throw Error("Not found");
+    }
+
+    const json = {
+      options: {
+        notifications: list[0].options.notifications
+      },
+      project: list[0].project,
+      urls: list.map(item => {
+        delete item.options.notifications;
+        return {
+          url: item.url,
+          options: item.options
+        };
+      })
+    };
+
+    //don't care about result
+    request({
+      method: "POST",
+      url: "http://localhost:3000/api/do",
+      json
+    });
+
+    res.json({
+      message: "Task has been started"
+    });
+  } catch (e) {
+    return res.status(500).json(e);
+  }
 });
 
 module.exports = router;

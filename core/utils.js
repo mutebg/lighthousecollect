@@ -18,7 +18,6 @@ const prepareConfig = config => {
       return merge(objValue, srcValue);
     }
   };
-
   config.urls = config.urls.reduce((prev, curr) => {
     if (typeof curr === "string") {
       prev[curr] = standartOptions;
@@ -40,14 +39,12 @@ const prepareConfig = config => {
   if (!config.task) {
     config.task = +new Date();
   }
-
-  if (!config.options.notifications) {
+  if (config.options && !config.options.notifications) {
     config.options.notifications = {
       when: "never",
-      email: null
+      email: ""
     };
   }
-
   return config;
 };
 

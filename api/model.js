@@ -27,11 +27,15 @@ const report = mongoose.model(
 
 const getProjects = () => report.find().distinct("project");
 
-const getList = filter =>
+const getList = (
+  filter,
+  fields = "id project task url generatedTime score overview"
+) =>
   report
     .find(filter)
-    .select("id project task url generatedTime score overview")
+    .select(fields)
     .sort({ generatedTime: "desc" })
+    .limit(20)
     .exec();
 
 const getById = id => report.findOne({ _id: id }).exec();
