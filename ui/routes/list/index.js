@@ -1,7 +1,7 @@
 import { h, Component } from "preact";
 import Filter from "./filter";
 import "./style";
-import { getList } from "../../utils/api";
+import { getList, reLunch } from "../../utils/api";
 import { getFIlter } from "../../utils/url";
 import { format as dateFormat } from "../../utils/date";
 
@@ -38,6 +38,12 @@ export default class List extends Component {
     });
   };
 
+  reLunch = (e, data) => {
+    e.target.innerText = "Loading...";
+    e.target.disabled = true;
+    reLunch(data);
+  };
+
   render(props, { list }) {
     const filter = getFIlter(props);
 
@@ -45,7 +51,16 @@ export default class List extends Component {
       const result = [
         <tr class="table-secondary">
           <td colSpan="2">{task}</td>
-          <td>{dateFormat(generatedTime)}</td>
+          <td>
+            {dateFormat(generatedTime)}
+
+            <button
+              onClick={e => this.reLunch(e, { project: props.project, task })}
+              class="button button-outline"
+            >
+              Restart
+            </button>
+          </td>
         </tr>
       ];
 
@@ -65,6 +80,14 @@ export default class List extends Component {
             >
               View Chart
             </a>
+            <button
+              onClick={e =>
+                this.reLunch(e, { project: props.project, _id: id })
+              }
+              class="button button-outline"
+            >
+              Restart
+            </button>
           </td>
         </tr>,
         <tr class="bottom-item">
