@@ -43,3 +43,5 @@ export const getProjects = () => get("projects");
 export const getList = filter => get("list?" + toQueryString(filter));
 
 export const getChart = filter => get("chart?" + toQueryString(filter));
+
+export const reLunch = filter => get("re?" + toQueryString(filter));

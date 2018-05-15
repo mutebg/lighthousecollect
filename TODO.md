@@ -8,6 +8,7 @@
 * CLI
 * Update Lighthouse to v3
 * Add FlowType/TypeScript
+* WebPush
 
 ## DOCUMENTATION
 
