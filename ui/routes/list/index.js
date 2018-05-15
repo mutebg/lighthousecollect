@@ -58,7 +58,7 @@ export default class List extends Component {
               onClick={e => this.reLunch(e, { project: props.project, task })}
               class="button button-outline"
             >
-              Restart
+              <i class="fas fa-retweet" /> Restart
             </button>
           </td>
         </tr>
@@ -70,7 +70,7 @@ export default class List extends Component {
           <td>{createPill({ label: "Total", value: total })}</td>
           <td>
             <a href={`/view/${id}`} class="button button-outline">
-              View report
+              <i class="fas fa-file-alt" /> View report
             </a>
             <a
               href={`/chart/?uri=${encodeURIComponent(url)}&project=${
@@ -78,7 +78,7 @@ export default class List extends Component {
               }`}
               class="button button-outline"
             >
-              View Chart
+              <i class="fas fa-chart-line" /> View Chart
             </a>
             <button
               onClick={e =>
@@ -86,7 +86,7 @@ export default class List extends Component {
               }
               class="button button-outline"
             >
-              Restart
+              <i class="fas fa-retweet" /> Restart
             </button>
           </td>
         </tr>,
