@@ -2,6 +2,7 @@
 
 * Relunch task/url
 * Notifications - send email, configuration for mail server and when and what to send https://nodemailer.com/about/
+* Improve UI
 
 # NICE TO HAVE
 
