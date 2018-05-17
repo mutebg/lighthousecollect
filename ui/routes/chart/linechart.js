@@ -91,8 +91,7 @@ export default class LineChart extends Component {
             const style =
               hidden.indexOf(key) < 0
                 ? {
-                    background: colros[index],
-                    borderColor: "var(--primary)"
+                    background: colros[index]
                   }
                 : {
                     background: "none",
@@ -101,7 +100,11 @@ export default class LineChart extends Component {
                   };
 
             return (
-              <button style={style} onClick={() => this.toggleLine(key)}>
+              <button
+                class="btn"
+                style={style}
+                onClick={() => this.toggleLine(key)}
+              >
                 {key}
               </button>
             );

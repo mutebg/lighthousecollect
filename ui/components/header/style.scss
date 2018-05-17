@@ -1,11 +1,23 @@
 .header {
-  height: 60px;
-  margin-bottom: 30px;
+  height: 56px;
   background: var(--primary);
   color: #fff;
-  padding: 20px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
 
   a {
     color: inherit;
+  }
+
+  &__social {
+    font-size: 2em;
   }
 }
