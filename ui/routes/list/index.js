@@ -4,18 +4,7 @@ import "./style";
 import { getList, reLunch } from "../../utils/api";
 import { getFIlter } from "../../utils/url";
 import { format as dateFormat } from "../../utils/date";
-
-const reportStatus = value => {
-  if (value > 75) return "pass";
-  else if (value > 45) return "average";
-  else return "fail";
-};
-
-const createPill = ({ label, value }) => (
-  <span class={"pill pill--" + reportStatus(value)}>
-    {label} <span class="badge">{value}</span>
-  </span>
-);
+import Badge from "../../components/badge";
 
 export default class List extends Component {
   state = {
@@ -48,60 +37,58 @@ export default class List extends Component {
     const filter = getFIlter(props);
 
     const renderTask = ({ task, generatedTime, urls }) => {
-      const result = [
-        <tr class="table-secondary">
-          <td colSpan="2">{task}</td>
-          <td>
-            {dateFormat(generatedTime)}
+      const restartTask = e =>
+        this.reLunch(e, { project: props.project, task });
 
-            <button
-              onClick={e => this.reLunch(e, { project: props.project, task })}
-              class="button button-outline"
-            >
+      return (
+        <div class="card">
+          <div class="card__title">
+            {dateFormat(generatedTime)}, Task #{task}
+          </div>
+
+          <div class="card__actions">
+            <button onClick={restartTask}>
               <i class="fas fa-retweet" /> Restart
             </button>
-          </td>
-        </tr>
-      ];
+          </div>
 
-      const urlsTrs = urls.map(({ id, url, total, data }) => [
-        <tr class="top-item">
-          <td width="60%">{url}</td>
-          <td>{createPill({ label: "Total", value: total })}</td>
-          <td>
-            <a href={`/view/${id}`} class="button button-outline">
-              <i class="fas fa-file-alt" /> View report
-            </a>
-            <a
-              href={`/chart/?uri=${encodeURIComponent(url)}&project=${
-                props.project
-              }`}
-              class="button button-outline"
-            >
-              <i class="fas fa-chart-line" /> View Chart
-            </a>
-            <button
-              onClick={e =>
-                this.reLunch(e, { project: props.project, _id: id })
-              }
-              class="button button-outline"
-            >
-              <i class="fas fa-retweet" /> Restart
-            </button>
-          </td>
-        </tr>,
-        <tr class="bottom-item">
-          <td colSpan="3">{data.map(createPill)}</td>
-        </tr>
-      ]);
-
-      return result.concat(urlsTrs);
+          <div class="card__list">
+            {urls.map(({ id, url, total, data }) => {
+              const restartURL = e =>
+                this.reLunch(e, { project: props.project, _id: id });
+              const viewChartURL = `/chart/?uri=${encodeURIComponent(
+                url
+              )}&project=${props.project}`;
+              return (
+                <div class="row">
+                  <div class="row__actions">
+                    <a href={`/view/${id}`} class="button button-outline">
+                      <i class="fas fa-file-alt" /> View report
+                    </a>
+                    <a href={viewChartURL}>
+                      <i class="fas fa-chart-line" /> View Chart
+                    </a>
+                    <button onClick={restartURL}>
+                      <i class="fas fa-retweet" /> Restart
+                    </button>
+                  </div>
+                  <div class="row__url">{url}</div>
+                  <div class="row__metrics">
+                    <Badge label="Total" value={total} />
+                    {data.map(metric => <Badge {...metric} />)}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
     };
 
     return (
       <div>
         <Filter {...filter} />
-        <table class="table result-table">{list.map(renderTask)}</table>
+        <div class="card-list">{list.map(renderTask)}</div>
       </div>
     );
   }

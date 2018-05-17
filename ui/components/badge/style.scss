@@ -1,0 +1,27 @@
+.badge {
+  font-size: 0.8em;
+  border-right: 0;
+  display: inline-block;
+  color: var(--pill-color);
+  margin-right: 12px;
+
+  &--pass {
+    --pill-color: var(--pass-color);
+  }
+  &--fail {
+    color: var(--fail-color);
+    --pill-color: var(--fail-color);
+  }
+
+  &--average {
+    color: var(--average-color);
+    --pill-color: var(--average-color);
+  }
+  &__value {
+    background: var(--pill-color);
+    padding: 2px;
+    color: #fff;
+    display: inline-block;
+    margin-right: 4px;
+  }
+}

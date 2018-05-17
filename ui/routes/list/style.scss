@@ -1,2 +1,82 @@
 .projects {
 }
+
+.card-list {
+  margin-top: 54px;
+}
+
+.card {
+  box-shadow: 0 -1px 0 #e0e0e0, 0 0 2px rgba(0, 0, 0, 0.12),
+    0 2px 4px rgba(0, 0, 0, 0.24);
+  border-radius: 2px;
+  background: #fff;
+  position: relative;
+  margin-bottom: 56px;
+
+  &__title,
+  &__actions {
+    color: #616161;
+    line-height: 24px;
+    position: absolute;
+    top: -30px;
+  }
+
+  &__title {
+    left: 10px;
+  }
+
+  &__actions {
+    right: 10px;
+  }
+
+  &__list {
+  }
+
+  a,
+  button {
+    margin-left: 16px;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+}
+
+.row {
+  padding: 15px 20px;
+
+  //display: flex;
+  &__url {
+    margin-bottom: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &__metrics {
+  }
+
+  &__actions {
+    float: right;
+  }
+}
+
+.row + .row {
+  border-top: 1px solid #ccc;
+}
+
+.result-filter {
+  display: flex;
+
+  .column {
+    flex: 1;
+  }
+
+  input {
+    padding: 0.5em;
+    border-radius: 2px;
+    background: #fff;
+    border: 1px solid currentColor;
+    height: 2em;
+    width: 90%;
+  }
+}

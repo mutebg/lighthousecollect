@@ -22,7 +22,7 @@ export default class App extends Component {
     return (
       <div id="app">
         <Header />
-        <main class="container">
+        <main class="main container">
           <Router>
             <Projects path="/" />
             <List path="/list/" />
