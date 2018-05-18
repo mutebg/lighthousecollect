@@ -1,7 +1,8 @@
 # IMPORTANT
 
 * Notifications - send email, configuration for mail server and when and what to send https://nodemailer.com/about/
-* Improve UI
+* List of all categories and audits
+* Implement in production
 
 # NICE TO HAVE
 
@@ -13,8 +14,6 @@
 ## DOCUMENTATION
 
 * Describe config, maybe use JSONSchema for that
-* cURL example
-* Deploy demo
 * Deploy script
 
 ### Example config

@@ -42,9 +42,11 @@ With hot-reloading and nodemon
 
 ## How To
 
-In order to use LighthouseCollect you need to make POST request to yourserver.com/api/do
+In order to use LighthouseCollect you need to make POST request to http://yourserver.com/api/do
 
 Example payload ( needs application/json header )
+
+config.json
 
 ```
 {
@@ -81,6 +83,14 @@ Example payload ( needs application/json header )
 		}
 	}
 }
+```
+
+### Example usage
+
+You can save your configuration in json file and use CURL to send it
+
+```
+curl -H "Content-Type: application/json" --data @config.json http://yourserver.com/api/do
 ```
 
 ### Options

@@ -8,7 +8,7 @@ if [ $FILE = "dev" ]; then
 fi
 
 if [ $FILE = "prod" ]; then
-  docker-compose --file docker-compose.yml up --build
+  docker-compose --file docker-compose.yml up --build --detach
 fi
 
 if [ $FILE = "local" ]; then

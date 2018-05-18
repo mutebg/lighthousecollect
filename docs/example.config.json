@@ -1,0 +1,28 @@
+{
+  "project": "skysport",
+  "urls": [
+    {
+      "url": "http://www.skysports.com/football/news"
+    },
+    {
+      "url": "http://www.skysports.com/"
+    }
+  ],
+  "options": {
+    "lookup": [
+      "https://twitter.com/SkySports",
+      "https://www.facebook.com/SkySports"
+    ],
+    "goal": {
+      "categories": [
+        { "name": "Progressive Web App", "value": 30 },
+        { "name": "Performance", "value": 30 }
+      ],
+      "audits": [{ "name": "first-interactive", "value": 20 }]
+    }
+  },
+  "notifications": {
+    "when": "always",
+    "email": "stoyandelev@mail.com"
+  }
+}
