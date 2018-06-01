@@ -25,6 +25,7 @@ const getFilter = req => {
     ? new Date(Date.parse(dateFrom + " 00:00:00"))
     : null;
   const datetimeTo = dateTo ? new Date(Date.parse(dateTo + " 23:59:59")) : null;
+
   if (datetimeFrom && datetimeTo) {
     filter["generatedTime"] = { $gt: datetimeFrom, $lt: datetimeTo };
   } else if (datetimeFrom) {
@@ -36,6 +37,7 @@ const getFilter = req => {
   return filter;
 };
 
+// start a task
 router.post("/do", (req, res) => {
   try {
     let config = req.body;
@@ -84,7 +86,6 @@ router.post("/do", (req, res) => {
         res.json(shortData);
       });
     });
-    //.catch(e);
   } catch (e) {
     res.json({
       error: e
@@ -92,6 +93,7 @@ router.post("/do", (req, res) => {
   }
 });
 
+// get list of projects
 router.get("/projects", async (req, res) => {
   try {
     const data = await report.getProjects();
@@ -101,11 +103,14 @@ router.get("/projects", async (req, res) => {
   }
 });
 
+// get list of tasks
 router.get("/list/", async (req, res) => {
   try {
     const filter = getFilter(req);
     const data = await report.getList(filter);
     const map = {};
+
+    // group urls by task
     const groupedByTask = data.reduce((prev, current) => {
       let index = map[current.task];
       if (typeof index === "undefined") {
@@ -136,6 +141,7 @@ router.get("/list/", async (req, res) => {
   }
 });
 
+// generate report in html format
 router.get("/view/:id/html", async (req, res) => {
   try {
     const ReportGenerator = require("../node_modules/lighthouse/lighthouse-core/report/v2/report-generator");
@@ -147,6 +153,7 @@ router.get("/view/:id/html", async (req, res) => {
   }
 });
 
+// get a data for charts
 router.get("/chart/", async (req, res) => {
   try {
     const filter = getFilter(req);
@@ -157,6 +164,7 @@ router.get("/chart/", async (req, res) => {
   }
 });
 
+//retart a task
 router.get("/re/", async (req, res) => {
   try {
     const extraFilters = ["_id", "project", "task"];
@@ -171,6 +179,7 @@ router.get("/re/", async (req, res) => {
       throw Error("Not found");
     }
 
+    // construct JSON payload
     const json = {
       options: {
         notifications: list[0].options.notifications
@@ -185,7 +194,7 @@ router.get("/re/", async (req, res) => {
       })
     };
 
-    //don't care about result
+    // don't care about result
     request({
       method: "POST",
       url: "http://localhost:3000/api/do",

@@ -11,8 +11,6 @@ const flags = {
   expectations: false,
   json: false,
   chromeFlags: [],
-
-  //output: "json"
   "chrome-flags": "--headless"
 };
 

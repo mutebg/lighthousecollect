@@ -50,6 +50,7 @@ const prepareConfig = config => {
 
 const getUrlOptions = (config, url) => config.urls[url];
 
+// gether list of unachieved goals
 const checkGoals = ({ categories, audits }, json) => {
   if (!categories && !audits) {
     return [];
@@ -81,6 +82,7 @@ const checkGoals = ({ categories, audits }, json) => {
   return errors;
 };
 
+// send email with all errors
 const sendNotification = (config, errors) => {
   const { when, email } = config.options.notifications;
   if (when !== "never" && email) {

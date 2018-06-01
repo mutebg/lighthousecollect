@@ -45,9 +45,6 @@ const config = {
       description: "TODO",
       audits: [{ id: "htmlvalidator-audit", weight: 1 }]
     }
-  },
-  options: {
-    bla: 1
   }
 };
 

@@ -10,14 +10,14 @@ app.use(bodyParser.json({ limit: "50mb" }));
 const staticPath = path.join(__dirname, "../build");
 app.use(express.static(staticPath));
 
-//DB setup
+// DB setup
 const mongoose = require("mongoose");
 const db = process.env.MONGODB;
-//const db = "mongodb://db/app";
 mongoose.connect(db);
 
-const fePages = ["/", "/list", "/view/:id", "/chart"];
-app.get(fePages, (req, res) => {
+// rewrite all frontned pages to home, so preact router can handle that
+const frontEndPages = ["/", "/list", "/view/:id", "/chart"];
+app.get(frontEndPages, (req, res) => {
   res.sendFile("index.html", {
     root: path.join(__dirname + "/../build/")
   });
