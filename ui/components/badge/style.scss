@@ -24,4 +24,29 @@
     display: inline-block;
     margin-right: 4px;
   }
+
+  &--pass-goal,
+  &--fail-goal {
+    &:after {
+      text-align: center;
+      color: #fff;
+      display: inline-block;
+      width: 1.2em;
+      height: 1.2em;
+      line-height: 1.2em;
+      border-radius: 1em;
+      background: red;
+      margin-left: 0.2em;
+    }
+  }
+
+  &--pass-goal:after {
+    content: "✓";
+    background: green;
+  }
+
+  &--fail-goal:after {
+    content: "×";
+    background: red;
+  }
 }
