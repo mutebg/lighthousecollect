@@ -62,7 +62,7 @@ router.post("/do", (req, res) => {
         rawDataItem.options = options;
         const goalErrors = utils.checkGoals(options.goal, rawDataItem);
         rawDataItem.goalErrors = goalErrors;
-        rawDataItem.overview = transforms.overview(rawDataItem);
+        rawDataItem.overview = transforms.overview(rawDataItem, options.goal);
         return report.create(rawDataItem);
       });
       return Promise.all(created).then(data => {
