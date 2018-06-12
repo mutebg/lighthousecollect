@@ -209,4 +209,20 @@ router.get("/re/", async (req, res) => {
   }
 });
 
+router.get("/test", async (req, res) => {
+  utils.sendNotification(
+    {
+      options: {
+        notifications: {
+          when: "always",
+          email: "i@stoyandelev.com"
+        }
+      }
+    },
+    []
+  );
+
+  res.json({ test: 1 });
+});
+
 module.exports = router;

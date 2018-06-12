@@ -7,6 +7,7 @@ const merge = require("lodash/merge");
 const isArray = require("lodash/isArray");
 const cloneDeep = require("lodash/cloneDeep");
 const validator = require("./validator");
+const nodemailer = require("nodemailer");
 
 const prepareConfig = config => {
   // prepare urls
@@ -83,10 +84,19 @@ const checkGoals = ({ categories, audits }, json) => {
 };
 
 // send email with all errors
-const sendNotification = (config, errors) => {
+const sendNotification = async (config, errors) => {
   const { when, email } = config.options.notifications;
   if (when !== "never" && email) {
-    console.log("TODO: send notifications to " + email);
+    const account = await nodemailer.createTestAccount();
+    const transporter = nodemailer.createTransport(process.env.SMTP);
+    const text = errors.length === 0 ? "No errors" : errors.join(" | ");
+
+    let message = {
+      to: email,
+      subject: "LighthouseCollect report",
+      text
+    };
+    const info = await transporter.sendMail(message);
   }
 };
 

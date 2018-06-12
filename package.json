@@ -25,6 +25,7 @@
     "lighthouse": "^2.9.4",
     "lodash": "^4.17.5",
     "mongoose": "^5.0.12",
+    "nodemailer": "^4.6.6",
     "preact": "^8.2.6",
     "preact-compat": "^3.17.0",
     "preact-head": "^1.0.2",
