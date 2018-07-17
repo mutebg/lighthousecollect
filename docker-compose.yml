@@ -1,15 +1,17 @@
 version: "2"
 services:
   db:
-    container_name: db
+    container_name: db-prod
     image: mongo
     volumes:
       - ./data:/data/db
     ports:
       - "27017:27017"
   app:
-    container_name: app
-    build: .
+    container_name: app-prod
+    build:
+      context: .
+      dockerfile: Dockerfile.base
     ports:
       - "3000:3000"
     links:
@@ -20,3 +22,4 @@ services:
     depends_on:
       - db
     env_file: .env
+    command: ["npm", "start"]
