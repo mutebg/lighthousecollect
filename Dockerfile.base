@@ -18,13 +18,10 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
 
 RUN mkdir /app
 WORKDIR /app
-
 COPY . /app
-RUN npm install
 
 # Disable Lighthouse error reporting to prevent prompt.
 ENV CI=true
 
-EXPOSE 3000
-
-CMD ["npm", "start"]
+RUN npm install nodemon -g
+RUN npm install
