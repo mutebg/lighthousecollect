@@ -1,5 +1,4 @@
 const Audit = require("lighthouse").Audit;
-const validator = require("html-validator");
 
 class StructuredAudit extends Audit {
   static get meta() {
@@ -7,7 +6,8 @@ class StructuredAudit extends Audit {
       name: "structureddata-audit",
       description: "Check document for structured data",
       failureDescription: "",
-      helpText: "More information TODO",
+      helpText:
+        "[Learn more](https://developers.google.com/search/docs/guides/intro-structured-data)",
       requiredArtifacts: ["Structuredata"]
     };
   }

@@ -7,7 +7,7 @@ class OutlineAudit extends Audit {
       name: "outline-audit",
       description: "Check document outline headings",
       failureDescription: "",
-      helpText: "More information TODO",
+      helpText: "[Learn more](http://html5doctor.com/outlines/)",
       requiredArtifacts: ["Outline"]
     };
   }

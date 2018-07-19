@@ -5,10 +5,10 @@ class FacebookAudit extends Audit {
   static get meta() {
     return {
       name: "facebook-audit",
-      description: "The page has all metatags for sharing in faecbook",
+      description: "The page has all metatags for sharing on Facebook",
       failureDescription: "",
       helpText:
-        "More information [Learn more](https://developers.facebook.com/docs/sharing/webmasters#markup)",
+        "[Learn more](https://developers.facebook.com/docs/sharing/webmasters#markup)",
       requiredArtifacts: ["Microdata"]
     };
   }
