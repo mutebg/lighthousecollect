@@ -7,12 +7,13 @@ class LookupAudit extends Audit {
       name: "lookup-audit",
       description: "Check for existing text inside the code",
       failureDescription: "",
-      helpText: "",
+      helpText:
+        "You can check for existing text inside your code, just a string based search. Usefull for facebook or twitter links.",
       requiredArtifacts: ["URL", "TakeHTML"]
     };
   }
 
-  static audit(artifacts, options) {
+  static audit(artifacts) {
     const html = artifacts.TakeHTML;
     const url = artifacts.URL.initialUrl;
     const lookupFor = utils.getUrlOptions(globalConfig, url).lookup;

@@ -1,7 +1,7 @@
 const Gatherer = require("lighthouse").Gatherer;
 
 class Outline extends Gatherer {
-  afterPass(options, loadData) {
+  afterPass(options) {
     const driver = options.driver;
     const expression = `(function() {
       const elements = document.querySelectorAll('h1, h2, h3, h4, h5, h6')

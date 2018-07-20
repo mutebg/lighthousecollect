@@ -2,7 +2,7 @@ const WAE = require("web-auto-extractor").default;
 const Gatherer = require("lighthouse").Gatherer;
 
 class Microdata extends Gatherer {
-  afterPass(options, loadData) {
+  afterPass(options) {
     const driver = options.driver;
     return driver
       .evaluateAsync("new XMLSerializer().serializeToString(document)")

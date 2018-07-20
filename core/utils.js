@@ -1,12 +1,7 @@
-const util = require("util");
-const path = require("path");
-const writeFile = util.promisify(require("fs").writeFile);
-const request = require("request-promise-native");
 const mergeWith = require("lodash/mergeWith");
 const merge = require("lodash/merge");
 const isArray = require("lodash/isArray");
 const cloneDeep = require("lodash/cloneDeep");
-const validator = require("./validator");
 const nodemailer = require("nodemailer");
 
 const prepareConfig = config => {
@@ -87,7 +82,7 @@ const checkGoals = ({ categories, audits }, json) => {
 const sendNotification = async (config, errors) => {
   const { when, email } = config.options.notifications;
   if (when !== "never" && email) {
-    const account = await nodemailer.createTestAccount();
+    await nodemailer.createTestAccount();
     const transporter = nodemailer.createTransport(process.env.SMTP);
     const text = errors.length === 0 ? "No errors" : errors.join(" | ");
 
@@ -97,6 +92,7 @@ const sendNotification = async (config, errors) => {
       text
     };
     const info = await transporter.sendMail(message);
+    console.log({ info });
   }
 };
 

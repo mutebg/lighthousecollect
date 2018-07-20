@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const report = require("./model");
-const _ = require("lodash");
 const lighthouse = require("../core/lighthouse");
 const utils = require("../core/utils");
 const transforms = require("./transforms");
