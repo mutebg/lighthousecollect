@@ -1,4 +1,9 @@
+Move to FIREBASE FUNCTIONS
+https://cloud.google.com/blog/products/gcp/introducing-headless-chrome-support-in-cloud-functions-and-app-engine
+
 # IMPORTANT
+
+
 
 * Notifications - send email, configuration for mail server and when and what to send https://nodemailer.com/about/
 * List of all categories and audits
