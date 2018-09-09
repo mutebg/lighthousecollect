@@ -1,5 +1,6 @@
 const mergeWith = require("lodash/mergeWith");
 const merge = require("lodash/merge");
+const isUndefined = require("lodash/isUndefined");
 const isArray = require("lodash/isArray");
 const cloneDeep = require("lodash/cloneDeep");
 const nodemailer = require("nodemailer");
@@ -62,14 +63,14 @@ const checkGoals = ({ categories, audits }, json) => {
   json.reportCategories.forEach(({ name, score, audits }) => {
     // compare score on category level
     const goalScore = categoriesSet[name];
-    if (goalScore !== "undefined" && score < goalScore) {
+    if (!isUndefined(goalScore) && score < goalScore) {
       errors.push(`${json.url} : ${name} score ${score} of ${goalScore} goal`);
     }
 
     //compare score on audit level
     audits.forEach(({ id, score }) => {
       const goalScore = auditsSet[id];
-      if (goalScore !== "undefined" && score < goalScore) {
+      if (!isUndefined(goalScore) && score < goalScore) {
         errors.push(`${json.url} : ${id} score ${score} of ${goalScore} goal`);
       }
     });
@@ -80,19 +81,26 @@ const checkGoals = ({ categories, audits }, json) => {
 
 // send email with all errors
 const sendNotification = async (config, errors) => {
-  const { when, email } = config.options.notifications;
-  if (when !== "never" && email) {
-    await nodemailer.createTestAccount();
-    const transporter = nodemailer.createTransport(process.env.SMTP);
-    const text = errors.length === 0 ? "No errors" : errors.join(" | ");
+  const { when, email } = config.notifications;
 
-    let message = {
-      to: email,
-      subject: "LighthouseCollect report",
-      text
-    };
-    const info = await transporter.sendMail(message);
-    console.log({ info });
+  if (when !== "never" && email) {
+    try {
+      await nodemailer.createTestAccount();
+      const SMTP = process.env.SMTP;
+      const transporter = nodemailer.createTransport(SMTP);
+      const text = errors.length === 0 ? "No errors" : errors.join(" | ");
+
+      let message = {
+        to: email,
+        subject: "LighthouseCollect report",
+        text
+      };
+      const info = await transporter.sendMail(message);
+      // TODO
+      console.log({ info });
+    } catch (e) {
+      console.log("Error sending email", e);
+    }
   }
 };
 
