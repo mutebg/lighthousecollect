@@ -53,22 +53,25 @@ router.post("/do", (req, res) => {
 
     //run lighthouse
     lighthouse.run(config).then(rawData => {
-      const created = rawData.map(rawDataItem => {
-        rawDataItem.project = config.project;
-        rawDataItem.task = config.task;
+      //return res.json(rawData);
+
+      const created = rawData.map(({ lhr }) => {
+        lhr.project = config.project;
+        lhr.task = config.task;
         //save url options part of audit
-        const options = utils.getUrlOptions(config, rawDataItem.url);
-        rawDataItem.options = options;
-        const goalErrors = utils.checkGoals(options.goal, rawDataItem);
-        rawDataItem.goalErrors = goalErrors;
-        rawDataItem.overview = transforms.overview(rawDataItem, options.goal);
-        return report.create(rawDataItem);
+        const options = utils.getUrlOptions(config, lhr.finalUrl);
+        lhr.options = options;
+        const goalErrors = utils.checkGoals(options.goal, lhr);
+        lhr.goalErrors = goalErrors;
+        lhr.overview = transforms.overview(lhr, options.goal);
+        return report.create(lhr);
       });
+
       return Promise.all(created).then(data => {
-        const shortData = data.map(({ _id, task, url, goalErrors }) => ({
+        const shortData = data.map(({ _id, task, finalUrl, goalErrors }) => ({
           _id,
           task,
-          url,
+          finalUrl,
           goalErrors
         }));
         // collect all errors
@@ -124,9 +127,9 @@ router.get("/list/", async (req, res) => {
 
       const short = {
         id: current._id,
-        url: current.url,
-        data: current.overview,
-        total: Math.round(current.score)
+        url: current.finalUrl,
+        data: current.overview
+        //total: Math.round(current.score)
       };
 
       prev[index].urls.push(short);
@@ -143,9 +146,9 @@ router.get("/list/", async (req, res) => {
 // generate report in html format
 router.get("/view/:id/html", async (req, res) => {
   try {
-    const ReportGenerator = require("../node_modules/lighthouse/lighthouse-core/report/v2/report-generator");
+    const ReportGenerator = require("../node_modules/lighthouse/lighthouse-core/report/report-generator");
     const json = await report.getById(req.params.id);
-    const html = new ReportGenerator().generateReportHtml(json);
+    const html = ReportGenerator.generateReportHtml(json);
     return res.send(html);
   } catch (e) {
     return res.status(500).json(e);

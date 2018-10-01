@@ -1,8 +1,8 @@
 import "./style";
 
 const reportStatus = value => {
-  if (value > 74) return "pass";
-  else if (value > 45) return "average";
+  if (value > 89) return "pass";
+  else if (value > 49) return "average";
   else return "fail";
 };
 

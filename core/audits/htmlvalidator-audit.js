@@ -7,7 +7,8 @@ const options = {
 class HTMLvalidatorAudit extends Audit {
   static get meta() {
     return {
-      name: "htmlvalidator-audit",
+      id: "htmlvalidator-audit",
+      title: "htmlvalidator-audit",
       description: "Page has a valid HTML",
       failureDescription: "",
       helpText:
@@ -41,9 +42,10 @@ class HTMLvalidatorAudit extends Audit {
         const details = Audit.makeTableDetails(headings, messages);
 
         return {
+          details,
           rawValue: messages.length === 0,
-          score: messages.length === 0,
-          details
+          scoreDisplayMode: "binary",
+          score: Number(messages.length === 0)
         };
       })
       .catch(error => {

@@ -3,7 +3,8 @@ const Audit = require("lighthouse").Audit;
 class StructuredAudit extends Audit {
   static get meta() {
     return {
-      name: "structureddata-audit",
+      id: "structureddata-audit",
+      title: "structureddata-audit",
       description: "Check document for structured data",
       failureDescription: "",
       helpText:
@@ -27,9 +28,10 @@ class StructuredAudit extends Audit {
     const details = Audit.makeTableDetails(headings, messages);
 
     return {
+      details,
       rawValue: messages.length === 0,
-      score: messages.length === 0,
-      details
+      scoreDisplayMode: "binary",
+      score: Number(messages.length === 0)
     };
   }
 }

@@ -4,17 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "preact build --no-prerender --template ui/assets/template.html --src=ui | node app.js",
-    "dev": "preact watch --template ui/assets/template.html --src=ui | nodemon app.js",
-    "ui:start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
-    "ui:build": "preact build --no-prerender --template ui/assets/template.html --src=ui",
+    "start":
+      "preact build --no-prerender --template ui/assets/template.html --src=ui | node app.js",
+    "dev":
+      "preact watch --template ui/assets/template.html --src=ui | nodemon app.js",
+    "ui:start":
+      "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
+    "ui:build":
+      "preact build --no-prerender --template ui/assets/template.html --src=ui",
     "ui:dev": "preact watch --template ui/assets/template.html --src=ui"
   },
   "author": "Stoyan Delev i@stoyandelev.com",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "chrome-launcher": "^0.10.2",
+    "body-parser": "^1.18.3",
+    "chrome-launcher": "^0.10.5",
     "commander": "^2.15.1",
     "cors": "^2.8.4",
     "dayjs": "^1.5.24",
@@ -22,7 +26,7 @@
     "express": "^4.16.3",
     "html-validator": "^2.2.3",
     "jsonschema": "^1.2.4",
-    "lighthouse": "^2.9.4",
+    "lighthouse": "^3.2.0",
     "lodash": "^4.17.5",
     "mongoose": "^5.0.12",
     "nodemailer": "^4.6.6",

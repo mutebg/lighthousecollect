@@ -74,7 +74,7 @@ export default class List extends Component {
                   </div>
                   <div class="row__url">{url}</div>
                   <div class="row__metrics">
-                    <Badge label="Total" value={total} />
+                    {/* <Badge label="Total" value={total} /> */}
                     {data.map(metric => <Badge {...metric} />)}
                   </div>
                 </div>

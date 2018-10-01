@@ -4,7 +4,8 @@ const objectKeyValidator = require("../helpers/validators").objectKeyValidator;
 class TwitterAudit extends Audit {
   static get meta() {
     return {
-      name: "twitter-audit",
+      id: "twitter-audit",
+      title: "twitter-audit",
       description: "The page has all metatags for sharing on Twitter",
       failureDescription: "",
       helpText:
@@ -27,9 +28,10 @@ class TwitterAudit extends Audit {
     const messages = errors.map(message => ({ message: "Missing " + message }));
     const details = Audit.makeTableDetails(headings, messages);
     return {
-      rawValue: false,
-      score: errors.length === 0,
-      details
+      details,
+      rawValue: errors.length === 0,
+      scoreDisplayMode: "binary",
+      score: Number(errors.length === 0)
     };
   }
 }
