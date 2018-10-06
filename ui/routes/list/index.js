@@ -36,14 +36,14 @@ export default class List extends Component {
   render(props, { list }) {
     const filter = getFIlter(props);
 
-    const renderTask = ({ task, generatedTime, urls }) => {
+    const renderTask = ({ task, fetchTime, urls }) => {
       const restartTask = e =>
         this.reLunch(e, { project: props.project, task });
 
       return (
         <div class="card">
           <div class="card__title">
-            {dateFormat(generatedTime)}, Task #{task}
+            {dateFormat(fetchTime)}, Task #{task}
           </div>
 
           <div class="card__actions">
@@ -74,7 +74,7 @@ export default class List extends Component {
                   </div>
                   <div class="row__url">{url}</div>
                   <div class="row__metrics">
-                    <Badge label="Total" value={total} />
+                    {/* <Badge label="Total" value={total} /> */}
                     {data.map(metric => <Badge {...metric} />)}
                   </div>
                 </div>

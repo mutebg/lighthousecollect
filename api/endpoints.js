@@ -9,7 +9,7 @@ const request = require("request-promise-native");
 
 const getFilter = req => {
   const extraFilters = ["project", "uri", "task"];
-  const remaped = { uri: "url" };
+  const remaped = { uri: "requestedUrl" };
   const filter = extraFilters.reduce((prev, next) => {
     if (req.query[next]) {
       const key = remaped[next] ? remaped[next] : next;
@@ -26,11 +26,11 @@ const getFilter = req => {
   const datetimeTo = dateTo ? new Date(Date.parse(dateTo + " 23:59:59")) : null;
 
   if (datetimeFrom && datetimeTo) {
-    filter["generatedTime"] = { $gt: datetimeFrom, $lt: datetimeTo };
+    filter["fetchTime"] = { $gt: datetimeFrom, $lt: datetimeTo };
   } else if (datetimeFrom) {
-    filter["generatedTime"] = { $gt: datetimeFrom };
+    filter["fetchTime"] = { $gt: datetimeFrom };
   } else if (datetimeTo) {
-    filter["generatedTime"] = { $lt: datetimeTo };
+    filter["fetchTime"] = { $lt: datetimeTo };
   }
 
   return filter;
@@ -53,24 +53,29 @@ router.post("/do", (req, res) => {
 
     //run lighthouse
     lighthouse.run(config).then(rawData => {
-      const created = rawData.map(rawDataItem => {
-        rawDataItem.project = config.project;
-        rawDataItem.task = config.task;
+      //return res.json(rawData);
+
+      const created = rawData.map(({ lhr }) => {
+        lhr.project = config.project;
+        lhr.task = config.task;
         //save url options part of audit
-        const options = utils.getUrlOptions(config, rawDataItem.url);
-        rawDataItem.options = options;
-        const goalErrors = utils.checkGoals(options.goal, rawDataItem);
-        rawDataItem.goalErrors = goalErrors;
-        rawDataItem.overview = transforms.overview(rawDataItem, options.goal);
-        return report.create(rawDataItem);
+        const options = utils.getUrlOptions(config, lhr.requestedUrl);
+        lhr.options = options;
+        const goalErrors = utils.checkGoals(options.goal, lhr);
+        lhr.goalErrors = goalErrors;
+        lhr.overview = transforms.overview(lhr, options.goal);
+        return report.create(lhr);
       });
+
       return Promise.all(created).then(data => {
-        const shortData = data.map(({ _id, task, url, goalErrors }) => ({
-          _id,
-          task,
-          url,
-          goalErrors
-        }));
+        const shortData = data.map(
+          ({ _id, task, requestedUrl, goalErrors }) => ({
+            _id,
+            task,
+            requestedUrl,
+            goalErrors
+          })
+        );
         // collect all errors
         const allErrors = shortData.reduce(
           (prev, curr) => [...prev, ...curr.goalErrors],
@@ -115,7 +120,7 @@ router.get("/list/", async (req, res) => {
       if (typeof index === "undefined") {
         prev.push({
           task: current.task,
-          generatedTime: current.generatedTime,
+          fetchTime: current.fetchTime,
           urls: []
         });
         index = prev.length - 1;
@@ -124,9 +129,9 @@ router.get("/list/", async (req, res) => {
 
       const short = {
         id: current._id,
-        url: current.url,
-        data: current.overview,
-        total: Math.round(current.score)
+        url: current.requestedUrl,
+        data: current.overview
+        //total: Math.round(current.score)
       };
 
       prev[index].urls.push(short);
@@ -143,9 +148,9 @@ router.get("/list/", async (req, res) => {
 // generate report in html format
 router.get("/view/:id/html", async (req, res) => {
   try {
-    const ReportGenerator = require("../node_modules/lighthouse/lighthouse-core/report/v2/report-generator");
+    const ReportGenerator = require("../node_modules/lighthouse/lighthouse-core/report/report-generator");
     const json = await report.getById(req.params.id);
-    const html = new ReportGenerator().generateReportHtml(json);
+    const html = ReportGenerator.generateReportHtml(json);
     return res.send(html);
   } catch (e) {
     return res.status(500).json(e);

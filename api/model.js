@@ -7,21 +7,23 @@ const report = mongoose.model(
     id: mongoose.Schema.ObjectId,
     project: { type: String },
     task: { type: String },
-    userAgent: { type: String },
-    lighthouseVersion: { type: String },
-    generatedTime: { type: Date },
-    initialUrl: { type: String },
-    url: { type: String },
-    runWarnings: Schema.Types.Mixed,
-    audits: Schema.Types.Mixed,
-    runtimeConfig: Schema.Types.Mixed,
-    score: { type: Number },
-    reportCategories: Schema.Types.Mixed,
-    reportGroups: Schema.Types.Mixed,
-    timing: Schema.Types.Mixed,
     options: Schema.Types.Mixed,
     goalErrors: [String],
-    overview: Schema.Types.Mixed
+    overview: Schema.Types.Mixed,
+    userAgent: { type: String },
+    environment: Schema.Types.Mixed,
+    lighthouseVersion: { type: String },
+    fetchTime: { type: Date },
+    requestedUrl: { type: String },
+    finalUrl: { type: String },
+    runWarnings: Schema.Types.Mixed,
+    runtimeError: Schema.Types.Mixed,
+    audits: Schema.Types.Mixed,
+    configSettings: Schema.Types.Mixed,
+    categories: Schema.Types.Mixed,
+    categoryGroups: Schema.Types.Mixed,
+    timing: Schema.Types.Mixed,
+    i18n: Schema.Types.Mixed
   })
 );
 
@@ -29,12 +31,12 @@ const getProjects = () => report.find().distinct("project");
 
 const getList = (
   filter,
-  fields = "id project task url generatedTime score overview"
+  fields = "id project task requestedUrl fetchTime overview"
 ) =>
   report
     .find(filter)
     .select(fields)
-    .sort({ generatedTime: "desc" })
+    .sort({ fetchTime: "desc" })
     .limit(20)
     .exec();
 

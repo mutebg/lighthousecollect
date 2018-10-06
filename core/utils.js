@@ -54,28 +54,31 @@ const checkGoals = ({ categories, audits }, json) => {
   }
   const errors = [];
   const arrayToSet = (prev, curr) => {
-    prev[curr.name] = curr.value;
+    prev[curr.id] = curr.value;
     return prev;
   };
   const categoriesSet = categories.reduce(arrayToSet, {});
   const auditsSet = audits.reduce(arrayToSet, {});
 
-  json.reportCategories.forEach(({ name, score, audits }) => {
-    // compare score on category level
+  for (const name in json.categories) {
     const goalScore = categoriesSet[name];
+    const score = json.categories[name].score * 100;
     if (!isUndefined(goalScore) && score < goalScore) {
-      errors.push(`${json.url} : ${name} score ${score} of ${goalScore} goal`);
+      errors.push(
+        `${json.requestedUrl} : ${name} score ${score} of ${goalScore} goal`
+      );
     }
+  }
 
-    //compare score on audit level
-    audits.forEach(({ id, score }) => {
-      const goalScore = auditsSet[id];
-      if (!isUndefined(goalScore) && score < goalScore) {
-        errors.push(`${json.url} : ${id} score ${score} of ${goalScore} goal`);
-      }
-    });
-  });
-
+  for (const name in json.audits) {
+    const goalScore = auditsSet[name];
+    const score = json.audits[name] * 100;
+    if (!isUndefined(goalScore) && score < goalScore) {
+      errors.push(
+        `${json.requestedUrl} : ${name} score ${score} of ${goalScore} goal`
+      );
+    }
+  }
   return errors;
 };
 

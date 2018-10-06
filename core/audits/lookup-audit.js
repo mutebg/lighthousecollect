@@ -4,7 +4,8 @@ const utils = require("../utils");
 class LookupAudit extends Audit {
   static get meta() {
     return {
-      name: "lookup-audit",
+      id: "lookup-audit",
+      title: "lookup-audit",
       description: "Check for existing text inside the code",
       failureDescription: "",
       helpText:
@@ -15,7 +16,7 @@ class LookupAudit extends Audit {
 
   static audit(artifacts) {
     const html = artifacts.TakeHTML;
-    const url = artifacts.URL.initialUrl;
+    const url = artifacts.URL.requestedUrl;
     const lookupFor = utils.getUrlOptions(globalConfig, url).lookup;
     const errors = lookupFor
       .map(item => {
@@ -33,9 +34,10 @@ class LookupAudit extends Audit {
     const details = Audit.makeTableDetails(headings, errors);
 
     return {
-      rawValue: false,
-      score: errors.length === 0,
-      details
+      details,
+      rawValue: errors.length === 0,
+      scoreDisplayMode: "binary",
+      score: Number(errors.length === 0)
     };
   }
 }

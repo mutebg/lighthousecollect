@@ -30,9 +30,9 @@ const config = {
   // 4. Create a new 'My site metrics' section in the default report for our results.
   categories: {
     microdata: {
-      name: "Microdata metrics",
+      title: "Microdata metrics",
       description: "TODO",
-      audits: [
+      auditRefs: [
         { id: "twitter-audit", weight: 1 },
         { id: "facebook-audit", weight: 1 },
         { id: "outline-audit", weight: 1 },
@@ -41,9 +41,9 @@ const config = {
       ]
     },
     validator: {
-      name: "HTML validator metrics",
+      title: "HTML validator metrics",
       description: "TODO",
-      audits: [{ id: "htmlvalidator-audit", weight: 1 }]
+      auditRefs: [{ id: "htmlvalidator-audit", weight: 1 }]
     }
   }
 };

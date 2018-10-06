@@ -1,13 +1,21 @@
+const reduce = require("lodash/reduce");
+const map = require("lodash/map");
+
 const overview = (raw, { categories }) => {
-  const categoriesSet = categories.reduce((prev, curr) => {
-    prev[curr.name] = curr.value;
-    return prev;
-  }, {});
-  return raw.reportCategories.map(({ name, score }) => {
-    const goalScore = categoriesSet[name];
+  const categoriesSet = reduce(
+    categories,
+    (prev, curr) => {
+      prev[curr.id] = curr.value;
+      return prev;
+    },
+    {}
+  );
+
+  return map(raw.categories, ({ score }, key) => {
+    const goalScore = categoriesSet[key];
     return {
-      label: name,
-      value: Math.round(score),
+      label: key,
+      value: Math.round(score * 100),
       goal: goalScore !== "undefined" ? goalScore : 0
     };
   });

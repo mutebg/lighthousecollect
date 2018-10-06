@@ -4,7 +4,8 @@ const validator = require("html-validator");
 class OutlineAudit extends Audit {
   static get meta() {
     return {
-      name: "outline-audit",
+      id: "outline-audit",
+      title: "outline-audit",
       description: "Check document outline headings",
       failureDescription: "",
       helpText: "[Learn more](http://html5doctor.com/outlines/)",
@@ -59,9 +60,10 @@ class OutlineAudit extends Audit {
     const details = Audit.makeTableDetails(headings, messages);
 
     return {
+      details,
       rawValue: messages.length === 0,
-      score: messages.length === 0,
-      details
+      scoreDisplayMode: "binary",
+      score: Number(messages.length === 0)
     };
   }
 }
