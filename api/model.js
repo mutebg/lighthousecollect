@@ -31,12 +31,12 @@ const getProjects = () => report.find().distinct("project");
 
 const getList = (
   filter,
-  fields = "id project task finalUrl fetchTime generatedTime overview"
+  fields = "id project task requestedUrl fetchTime overview"
 ) =>
   report
     .find(filter)
     .select(fields)
-    .sort({ generatedTime: "desc" })
+    .sort({ fetchTime: "desc" })
     .limit(20)
     .exec();
 

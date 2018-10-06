@@ -65,7 +65,7 @@ const checkGoals = ({ categories, audits }, json) => {
     const score = json.categories[name].score * 100;
     if (!isUndefined(goalScore) && score < goalScore) {
       errors.push(
-        `${json.finalUrl} : ${name} score ${score} of ${goalScore} goal`
+        `${json.requestedUrl} : ${name} score ${score} of ${goalScore} goal`
       );
     }
   }
@@ -75,7 +75,7 @@ const checkGoals = ({ categories, audits }, json) => {
     const score = json.audits[name] * 100;
     if (!isUndefined(goalScore) && score < goalScore) {
       errors.push(
-        `${json.finalUrl} : ${name} score ${score} of ${goalScore} goal`
+        `${json.requestedUrl} : ${name} score ${score} of ${goalScore} goal`
       );
     }
   }
